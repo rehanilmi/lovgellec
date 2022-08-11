@@ -33,23 +33,23 @@
                         <?php $totalprice=0; ?>
                         @foreach($cart as $cart)
                         <tr class="text-center">
-                            
+
                             <td class="product-remove"><a href="{{ url ('remove_cart',$cart->id) }}"
                                 onclick="return confirm('Are you sure to remove the product?')">
                                 <span class="ion-ios-close"></span></a></td>
-                            
+
                             <td class="image-prod"><img class="img" src="/product/{{$cart->image}}"></td>
-                            
-                            
+
+
                             <td class="product-name">
                                 <h3>{{ $cart->product_title }} </h3>
                                 <p> {{ $cart->description }} </p>
                             </td>
-                            
+
                             <td class="price">
                                 <h3>Rp. {{ $cart->price }} </h3>
                             </td>
-                            
+
                             <td class="quantity">
                                 <div class="text-center">
                                 <h3>{{ $cart->quantity }} </h3>
@@ -58,7 +58,7 @@
 
                         <?php $totalprice=$totalprice + $cart->price ?>
                         <td class="total"> {{ $totalprice }} </td>
-                        
+
                     </tr><!-- END TR-->
 
                     @endforeach
@@ -72,12 +72,12 @@
                     <span>Total</span>
                     <span> Rp. {{ $totalprice }}</span>
                 </p>
-                
+
             </div>
-            
+
                 <a href="{{ url('cash_order') }}" class="btn btn-danger"> Cash On Delivery</a>
 
-                <a href="{{ url ('midtrans', $totalprice) }}" class="btn btn-danger"> Virtual Account Billing </a>
+                <a href="{{ url ('payment') }}" class="btn btn-danger"> Virtual Account Billing </a>
 
 
                 </div>
