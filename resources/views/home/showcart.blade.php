@@ -15,73 +15,87 @@
 
 <section class="ftco-section ftco-cart">
     <div class="container">
+        @if(empty($cart) || count($cart) ==0 )
+        <center><p>tidak ada product di cart</p></center>
+        @else
         <div class="row">
         <div class="col-md-12 ftco-animate">
             <div class="cart-list">
                 <table class="table">
                     <thead class="thead-primary">
                         <tr class="text-center">
-                            <th>Remove</th>
+                            <th>No.</th>
                             <th>Gambar</th>
                             <th>Product Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Total</th>
+                            <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $totalprice=0; ?>
-                        @foreach($cart as $cart)
+                        <?php
+                        $no=1;
+                        $totalbelanja=0;
+                        ?>
+                        @foreach($cart as $ct => $val)
+                        <?php
+                          $totalprice = $val["price"] * $val["quantity"]
+                        ?>
                         <tr class="text-center">
 
-                            <td class="product-remove"><a href="{{ url ('remove_cart',$cart->id) }}"
-                                onclick="return confirm('Are you sure to remove the product?')">
-                                <span class="ion-ios-close"></span></a></td>
+                            <td>{{$no++}}</td>
 
-                            <td class="image-prod"><img class="img" src="/product/{{$cart->image}}"></td>
+                            <td class="image-prod"><img class="img" src="/product/{{ $val["image"]}}"></td>
 
 
                             <td class="product-name">
-                                <h3>{{ $cart->product_title }} </h3>
-                                <p> {{ $cart->description }} </p>
+                                <h3>{{ $val["product_title"]}} </h3>
+                                <p> {{ $val["description"]}} </p>
                             </td>
 
                             <td class="price">
-                                <h3>Rp. {{ $cart->price }} </h3>
+                                <h3>Rp. {{ $val["price"]}} </h3>
                             </td>
 
                             <td class="quantity">
                                 <div class="text-center">
-                                <h3>{{ $cart->quantity }} </h3>
+                                <h3>{{ $val["quantity"]}} Pcs </h3>
                             </div>
-                        </td>
+                            </td>
 
-                        <?php $totalprice=$totalprice + $cart->price ?>
-                        <td class="total"> {{ $totalprice }} </td>
+                            <td class="total"> Rp. {{ $totalprice }} </td>
+
+                        <td class="product-remove"><a href="{{ url ('remove_cart',$val->id) }}"
+                            onclick="return confirm('Are you sure to remove the product?')">
+                            <span class="ion-ios-close"></span></a></td>
 
                     </tr><!-- END TR-->
 
+                    <?php
+                      $totalbelanja+= $totalprice;
+                     ?>
+
                     @endforeach
                 </table>
-
 
         <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
             <div class="cart-total mb-3">
                 <h3>Cart Totals</h3>
                 <p class="d-flex">
                     <span>Total</span>
-                    <span> Rp. {{ $totalprice }}</span>
+                    <span> Rp. {{ $totalbelanja }}</span>
                 </p>
 
-            </div>
-
-                <a href="{{ url('cash_order') }}" class="btn btn-danger"> Cash On Delivery</a>
+        </div>
+                <a href="{{ url ('cash_order') }}" onclick="return confirm('Are you sure to order?')" class="btn btn-danger"> Cash On Delivery </a>
 
                 <a href="{{ url ('payment') }}" class="btn btn-danger"> Virtual Account Billing </a>
 
 
                 </div>
         </div>
+    @endif
 </section>
 
 @include('home.script')

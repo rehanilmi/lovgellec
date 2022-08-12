@@ -92,4 +92,6 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/payment',[HomeController::class,'payment']);
 
-    Route::post('/payment',[HomeController::class,'payment_post']);
+    route::post('/payment',[HomeController::class,'payment_post']);
+
+    route::get('/order/create',[HomeController::class,'do_create_order']);

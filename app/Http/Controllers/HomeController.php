@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\HeaderOrder;
 use RealRashid\SweetAlert\Facades\Alert;
 use Midtrans\Config;
 use Midtrans\Snap;
@@ -199,52 +200,65 @@ class HomeController extends Controller
             $user=Auth::user();
             $userid=$user->id;
             $data=cart::where('user_id','=',$userid)->get();
+            $totalbelanja=0;
 
 
-          foreach($data as $data)
-          {
+            foreach($data as $dt => $val)
+            {
+              $totalprice = $val->price * $val->quantity;
+              $totalbelanja+= $totalprice;
 
-              $params = array(
-                  'transaction_details' => array(
-                      'order_id' => rand(),
-                      'gross_amount' => 10000,
-                  ),
+              $params = [
+                          'transaction_details' => array(
+                              'order_id' => rand(),
+                              'gross_amount' => 10000,
+                          ),
+                          'item_details' => array(
+                              [
+                                  'id' => $val->id,
+                                  'price' => $totalbelanja,
+                                  'quantity' => $val->quantity,
+                                  'name' => $val->product_title
+                              ],
+                            ),
 
-                  'item_details' => array(
-                      [
-                          'id' => $data->id,
-                          'price' => $data->price,
-                          'quantity' => $data->quantity,
-                          'name' => $data->product_title
-                      ],
-                    ),
+                          'customer_details' => array(
+                              'first_name' => 'sdr',
+                              'last_name' => $val->name,
+                              'email' => $val->email,
+                              'phone' => $val->phone,
+                            ),
+                          ];
 
-                  'customer_details' => array(
-                      'first_name' => $data->name,
-                      'last_name' => '',
-                      'email' => $data->email,
-                      'phone' => $data->phone,
-                  ),
-              );
-           }
-	        $snapToken = \Midtrans\Snap::getSnapToken($params);
+                      $order=new order;
 
+                      $order->name=$val->name;
+                      $order->email=$val->email;
+                      $order->phone=$val->phone;
+                      $order->address=$val->address;
+                      $order->user_id=$val->user_id;
+                      $order->product_title=$val->product_title;
+                      $order->price=$val->price;
+                      $order->quantity=$val->quantity;
+                      $order->image=$val->image;
+                      $order->product_id=$val->Product_id;
+
+                      $order->payment_status='tranfer';
+                      // $order->delivery_status='Sedang dalam proses';
+                      $order->save();
+
+                      $cart_id=$val->id;
+                      $cart=cart::find($cart_id);
+                      $cart->delete();
+
+                }
+
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
             return view('home.payment', compact ('snapToken'));
         }
 
         public function payment_post(Request $request){
                $json = json_decode($request->get('json'));
-               $order = new Order();
-               $order->payment_status = $json->transaction_status;
-               $order->name = $request->name;
-               $order->email = $request->email;
-               $order->phone = $request->phone;
-               // $order->transaction_id = $json->transaction_id;
-               // $order->order_id = $json->order_id;
-               // $order->gross_amount = $json->gross_amount;
-               // $order->payment_type = $json->payment_type;
-               // $order->payment_code = isset($json->payment_code) ? $json->payment_code : null;
-               // $order->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
                return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
            }
 
@@ -299,6 +313,10 @@ class HomeController extends Controller
         public function contact()
         {
             return view('home.contact');
+        }
+
+        public function do_create_order(){
+
         }
 
 }
