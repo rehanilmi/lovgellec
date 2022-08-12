@@ -10,4 +10,5 @@ class Order extends Model
 {
     use HasFactory;
     use Notifiable;
+
 }
