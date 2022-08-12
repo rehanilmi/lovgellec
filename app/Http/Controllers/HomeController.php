@@ -259,7 +259,7 @@ class HomeController extends Controller
 
         public function payment_post(Request $request){
                $json = json_decode($request->get('json'));
-               return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
+               return $order->save() ? redirect(url('/show_order'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
            }
 
 
