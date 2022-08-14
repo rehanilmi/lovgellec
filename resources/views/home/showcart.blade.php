@@ -78,23 +78,37 @@
 
                     @endforeach
                 </table>
+        <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+            <div class="cart-total mb-3">
+            <h3>Cek Ongkir</h3>
+            <a href="{{ url ('ongkir') }}"  class="btn btn-danger"> Tambahkan Ongkir </a>
+          </div>
+        </div>
 
         <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
             <div class="cart-total mb-3">
                 <h3>Cart Totals</h3>
                 <p class="d-flex">
-                    <span>Total</span>
+                    <span>Biaya Ongkir </span>
                     <span> Rp. {{ $totalbelanja }}</span>
                 </p>
-
+                <p class="d-flex">
+                    <span>Total Semua</span>
+                    <span> Rp. {{ $totalbelanja }}</span>
+                </p>
+            </div>
         </div>
-                <a href="{{ url ('cash_order') }}" onclick="return confirm('Are you sure to order?')" class="btn btn-danger"> Cash On Delivery </a>
 
-                <a href="{{ url ('payment') }}" class="btn btn-danger"> Virtual Account Billing </a>
-
-
-                </div>
+        <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+            <div class="cart-total mb-3">
+              <h3>Metode Pembayaran</h3>
+              <a href="{{ url ('cash_order') }}" onclick="return confirm('Are you sure to order?')" class="btn btn-danger" style="margin-bottom: 10px;"> Cash On Delivery </a>
+              <a href="{{ url ('payment') }}" class="btn btn-danger"> Virtual Account Billing </a>
+            </div>
         </div>
+
+      </div>
+   </div>
     @endif
 </section>
 

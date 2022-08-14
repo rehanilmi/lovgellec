@@ -13,7 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('cities', function (Blueprint $table) {
+          $table->id();
+          $table->unsignedInteger('province_id');
+          $table->unsignedInteger('city_id');
+          $table->string('name');
+          $table->timestamps();
+        });
     }
 
     /**
@@ -23,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-      Schema::table('carts', function($table) {
-       $table->dropColumn('id_header_carts');
-      });
+        Schema::dropIfExists('cities');
     }
 };

@@ -95,3 +95,7 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
     route::post('/payment',[HomeController::class,'payment_post']);
 
     route::get('/order/create',[HomeController::class,'do_create_order']);
+
+    route::get('/ongkir',[HomeController::class,'kurir']);
+    route::post('/ongkir',[HomeController::class,'check_ongkir']);
+    route::get('/cities/{province_id}',[HomeController::class,'getCities']);

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Province;
+use App\Models\City;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
@@ -13,10 +15,13 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Midtrans\Config;
 use Midtrans\Snap;
 use GuzzleHttp\Client;
+use Kavist\RajaOngkir\Facades\RajaOngkir;
+
 
 
 class HomeController extends Controller
 {
+
 
     public function index()
     {
@@ -182,10 +187,6 @@ class HomeController extends Controller
             return redirect()->back()->with('message','We have received your order. We will connect with you soon..');
         }
 
-
-
-
-
         public function payment(Request $request)
         {
             // Set your Merchant Server Key
@@ -257,7 +258,8 @@ class HomeController extends Controller
             return view('home.payment', compact ('snapToken'));
         }
 
-        public function payment_post(Request $request){
+        public function payment_post(Request $request)
+        {
                $json = json_decode($request->get('json'));
                $order = new Order();
                $order->payment_status = $json->transaction_status;
@@ -273,7 +275,39 @@ class HomeController extends Controller
                return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
            }
 
+        public function kurir()
+           {
+               $provinces = Province::pluck('name', 'province_id');
+               return view('home.ongkir', compact('provinces'));
+           }
 
+           public function getCities($id)
+           {
+               $city = City::where('province_id', $id)->pluck('name', 'city_id');
+               return response()->json($city);
+           }
+
+           public function check_ongkir(Request $request)
+           {
+               $cost = RajaOngkir::ongkosKirim([
+                   'origin'        => 345, // ID kota/kabupaten asal
+                   'destination'   => $request->city_destination, // ID kota/kabupaten tujuan
+                   'weight'        => 1000, // berat barang dalam gram
+                   'courier'       => $request->courier // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
+               ])->get();
+
+               // $nama_jasa = $cost[0]['name'];
+               //      foreach ($cost[0]['costs'] as $row)
+               //      {
+               //      	$result[] = array(
+               //      		'description' => $row['description'],
+               //      		'biaya'       => $row['cost'][0]['value'],
+               //      		'etd'         => $row['cost'][0]['etd']
+               //      	);
+               //      }
+
+               return response()->json($cost);
+           }
 
 
         public function show_order()
