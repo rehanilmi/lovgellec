@@ -129,19 +129,19 @@
         </select>
         </div>
 
-        <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+        <div class="col-lg-5 mt-5 cart-wrap ftco-animate">
             <div class="cart-total mb-3">
                 <h3>Cart Totals</h3>
                 <p class="d-flex">
-                  <span>Total Semua</span>
-                  <span> Rp. {{ $totalbelanja }}</span>
+                  <span>Total Belanja : Rp.{{$totalbelanja}}</span>
                   <input type="hidden" value="{{$totalbelanja}}" class="form-control" name="totalbelanja" id="totalbelanja">
                 </p>
                 <p class="d-flex">
-                 Ongkos Kirim : Rp <span id="ongkoskirim" name="ongkoskirim"></span>
+                 Ongkos Kirim  : Rp <span id="ongkoskirim" name="ongkoskirim"></span>
                 </p>
-                <p>Total : Rp <span id="total" name="total"></span></p>
-
+                <p class="d-flex">
+                Total &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp: Rp <span id="total" name="total"></span>
+               </p>
             </div>
         </div>
 
