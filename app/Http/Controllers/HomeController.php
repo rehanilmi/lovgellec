@@ -139,7 +139,9 @@ class HomeController extends Controller
             {
                 $id=Auth::user()->id;
                 $cart=cart::where('user_id','=',$id)->get();
-                return view('home.showcart', compact('cart'));
+                $provinsi = $this->get_province();
+
+                return view('home.showcart', compact('cart','provinsi'));
             }
             else
             {
@@ -275,40 +277,134 @@ class HomeController extends Controller
                return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
            }
 
-        public function kurir()
-           {
-               $provinces = Province::pluck('name', 'province_id');
-               return view('home.ongkir', compact('provinces'));
-           }
+        // public function kurir()
+        // {
+        //        $provinces = Province::pluck('name', 'province_id');
+        //        return view('home.ongkir', compact('provinces'));
+        //    }
+        //
+        //    public function getCities($id)
+        //    {
+        //        $city = City::where('province_id', $id)->pluck('name', 'city_id');
+        //        return response()->json($city);
+        //    }
+        //
+        //    public function check_ongkir(Request $request)
+        //    {
+        //        $cost = RajaOngkir::ongkosKirim([
+        //            'origin'        => 345, // ID kota/kabupaten asal
+        //            'destination'   => $request->city_destination, // ID kota/kabupaten tujuan
+        //            'weight'        => 1000, // berat barang dalam gram
+        //            'courier'       => $request->courier // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
+        //        ])->get();
+        //
+        //        return response()->json($cost);
+        //
+        //        // $nama_jasa = $cost[0]['name'];
+        //        //      foreach ($cost[0]['costs'] as $row)
+        //        //      {
+        //        //      	$result[] = array(
+        //        //      		'description' => $row['description'],
+        //        //      		'biaya'       => $row['cost'][0]['value'],
+        //        //      		'etd'         => $row['cost'][0]['etd']
+        //        //      	);
+        //        //      }
+        //
+        //    }
 
-           public function getCities($id)
-           {
-               $city = City::where('province_id', $id)->pluck('name', 'city_id');
-               return response()->json($city);
-           }
+        public function get_province(){
+          $curl = curl_init();
 
-           public function check_ongkir(Request $request)
-           {
-               $cost = RajaOngkir::ongkosKirim([
-                   'origin'        => 345, // ID kota/kabupaten asal
-                   'destination'   => $request->city_destination, // ID kota/kabupaten tujuan
-                   'weight'        => 1000, // berat barang dalam gram
-                   'courier'       => $request->courier // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
-               ])->get();
+          curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+              "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
+            ),
+          ));
 
-               // $nama_jasa = $cost[0]['name'];
-               //      foreach ($cost[0]['costs'] as $row)
-               //      {
-               //      	$result[] = array(
-               //      		'description' => $row['description'],
-               //      		'biaya'       => $row['cost'][0]['value'],
-               //      		'etd'         => $row['cost'][0]['etd']
-               //      	);
-               //      }
+          $response = curl_exec($curl);
+          $err = curl_error($curl);
 
-               return response()->json($cost);
-           }
+          curl_close($curl);
 
+          if ($err) {
+          echo "cURL Error #:" . $err;
+          } else {
+          //ini kita decode data nya terlebih dahulu
+          $response=json_decode($response,true);
+          //ini untuk mengambil data provinsi yang ada di dalam rajaongkir resul
+          $data_pengirim = $response['rajaongkir']['results'];
+          return $data_pengirim;
+          }
+
+        }
+
+        public function get_city($id){
+          $curl = curl_init();
+
+          curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.rajaongkir.com/starter/city?&province=$id",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+              "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
+            ),
+          ));
+
+          $response = curl_exec($curl);
+          $err = curl_error($curl);
+
+          curl_close($curl);
+
+          if ($err) {
+          echo "cURL Error #:" . $err;
+          } else {
+          $response=json_decode($response,true);
+          $data_kota = $response['rajaongkir']['results'];
+          return json_encode($data_kota);
+          }
+
+        }
+
+        public function get_ongkir($origin, $destination, $weight, $courier){
+        $curl = curl_init();
+        $origin = 456;
+        $weight = 1000;
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "origin=$origin&destination=$destination&weight=$weight&courier=$courier",
+        CURLOPT_HTTPHEADER => array(
+        "content-type: application/x-www-form-urlencoded",
+        "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
+        ),
+        ));
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        } else {
+        $response=json_decode($response,true);
+        $data_ongkir = $response['rajaongkir']['results'];
+        return json_encode($data_ongkir);
+        }
+        }
 
         public function show_order()
         {

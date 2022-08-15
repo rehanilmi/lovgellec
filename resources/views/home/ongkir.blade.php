@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <!-- <div class="row mt-3">
+    <div class="row mt-3">
         <div class="col-md-12">
             <div class="card d-none ongkir">
                 <div class="card-body">
@@ -58,40 +58,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
-   @if(empty($result) || count($result) ==0 )
-      <section>
-       <div class="row mt-2">
-         <a href="" class="btn btn-danger">Pilih Ongkir</a>
-       </div>
-      </section>
-    @else
-      <section>
-        <div class="row mt-4">
-        <?php $i = 0;?>
-        @foreach(result as $r)
-            <div class="col-md-3">
-              <div class="card">
-                <div class="card-body text-center">
-                  <div><h5>{{$nama_jasa}}</h5></div>
-                    <div class="row mt-2">
-                      <div class="col-md-12">
-                      <h5><strong>{{ $r['biaya']}}</strong></h5>
-                      <h6><strong>{{ $r['etd']}}</strong></h6>
-                      <h6><strong>{{ $r['description']}}</strong></h6>
-                      </div>
-                    </div>
-                  <div class="row mt-2">
-                    <a href="" class="btn btn-danger">Pilih Ongkir</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <?php $i++;?>
-          @endforeach
-        </div>
-      </section>
-    @endif
+    </div>
 
 </div>
 
