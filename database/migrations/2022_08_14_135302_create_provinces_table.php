@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-
-      Schema::table('carts', function (Blueprint $table) {
-        $table->foreignId('id_header_carts');
-      });
+        Schema::create('provinces', function (Blueprint $table) {
+           $table->id();
+           $table->unsignedInteger('province_id');
+           $table->string('name');
+           $table->timestamps();
+        });
     }
 
     /**
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('provinces');
     }
 };
