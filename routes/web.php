@@ -96,6 +96,10 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/order/create',[HomeController::class,'do_create_order']);
 
-    route::get('/ongkir',[HomeController::class,'kurir']);
+    route::get('/test',[HomeController::class,'get_province']);
+
     route::post('/ongkir',[HomeController::class,'check_ongkir']);
-    route::get('/cities/{province_id}',[HomeController::class,'getCities']);
+
+    route::get('/kota/{id}',[HomeController::class,'get_city']);
+
+    route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[HomeController::class,'get_ongkir']);
