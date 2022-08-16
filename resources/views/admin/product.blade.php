@@ -40,27 +40,27 @@
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputName1">Nama Produk</label>
-                        <input type="text" class="form-control" id="exampleInputName1"placeholder="Masukkan Nama" required="">
+                        <input type="text" class="form-control" name="title" id="exampleInputName1"placeholder="Masukkan Nama" required="">
                     </div>
 
                 <div class="form-group">
                     <label for="exampleInputName1">Deskripsi</label>
-                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Masukkan Deskripsi" required="">
+                    <input type="text" class="form-control" name="description" id="exampleInputName1" placeholder="Masukkan Deskripsi" required="">
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputName1">Harga</label>
-                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Masukkan Harga" required="">
+                    <input type="text" class="form-control" name="price" id="exampleInputName1" placeholder="Masukkan Harga" required="">
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputName1">Harga Diskon</label>
-                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Masukkan Harga Diskon">
+                    <input type="text" class="form-control" name="discount_price" id="exampleInputName1" placeholder="Masukkan Harga Diskon">
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputName1">Jumlah Produk</label>
-                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Masukkan Jumlah Produk" required="">
+                    <input type="text" class="form-control" name="quantity" id="exampleInputName1" placeholder="Masukkan Jumlah Produk" required="">
                 </div>
 
                 <div class="form-group">

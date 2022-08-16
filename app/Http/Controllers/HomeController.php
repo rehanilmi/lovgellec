@@ -246,7 +246,7 @@ class HomeController extends Controller
                       $order->image=$val->image;
                       $order->product_id=$val->Product_id;
 
-                      $order->payment_status='tranfer';
+                      $order->payment_status='transfer';
                       // $order->delivery_status='Sedang dalam proses';
                       $order->save();
 
