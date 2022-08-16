@@ -44,15 +44,10 @@
                             </tr><!-- END TR-->
                             @endforeach
                             <tr class="text-center">
-                                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-                                <td class="image-prod"><div class="img" style="background-image:url(images/product-2.jpg);"></div></td>
-                                <td class="product-name">
-                                    
-                                </td>
+                                <td class=""><a href="#"></a></td>
+                                <td class="product-name"></td>
                                 <td class="quantity">
-                                    <div class="input-group mb-3">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
+                                    <div class="input-group mb-3"></div>
                             </td>
                             </tr><!-- END TR-->
                             </tbody>
