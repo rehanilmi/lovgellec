@@ -77,7 +77,7 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/cash_order',[HomeController::class,'cash_order']);
 
-    route::get('/show_order',[HomeController::class,'show_order']);
+    // route::get('/show_order',[HomeController::class,'show_order']);
 
     route::get('/cancel_order/{id}',[HomeController::class,'cancel_order']);
 
@@ -91,16 +91,22 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/laporan',[HomeController::class,'laporan']);
 
-    route::get('/payment',[HomeController::class,'payment']);
+    // route::get('/payment',[HomeController::class,'payment']);
+    //
+    // route::post('/payment',[HomeController::class,'payment_post']);
 
-    route::post('/payment',[HomeController::class,'payment_post']);
+    // route::get('/order/create',[HomeController::class,'do_create_order']);
 
-    route::get('/order/create',[HomeController::class,'do_create_order']);
-
-    route::get('/test',[HomeController::class,'get_province']);
+    // route::get('/test',[HomeController::class,'get_province']);
 
     route::post('/ongkir',[HomeController::class,'check_ongkir']);
 
     route::get('/kota/{id}',[HomeController::class,'get_city']);
 
     route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[HomeController::class,'get_ongkir']);
+
+    route::post('/checkout',[HomeController::class,'checkout']);
+
+    route::get('/order',[HomeController::class,'order']);
+
+    route::get('/detail_order/{id}',[HomeController::class,'detail_order']);

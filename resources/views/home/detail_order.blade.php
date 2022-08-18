@@ -9,34 +9,29 @@
                         <table class="table">
                             <thead class="thead-primary">
                             <tr class="text-center">
-                                <th> Tanggal </th>
-                                <th> Invoice</th>
-                                <th> Total Belanja</th>
-                                <th> Total Ongkir</th>
-                                <th> Total </th>
-                                <th> Jumlah </th>
-                                <th> Kurir </th>
-                                <th> Layanan </th>
-                                <th> Status </th>
-                                <th> Aksi </th>
-
+                                <th> Image</th>
+                                <th> Product Name</th>
+                                <th> Quantity</th>
+                                <th> Price</th>
+                                <th> Nama</th>
+                                <th> Alamat</th>
+                                <th> Email</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($headerorder as $headerorder)
-                                <td> {{ $headerorder->tanggal_order }} </td>
-                                <td> 783626543{{ $headerorder->id}} </td>
-                                <td> {{ $headerorder->total_belanja }} </td>
-                                <td> {{ $headerorder->total_ongkir }} </td>
-                                <td> {{ $headerorder->total }} </td>
-                                <td> {{ $headerorder->count }} </td>
-                                <td> {{ $headerorder->kurir }} </td>
-                                <td> {{ $headerorder->layanan }} </td>
-                                <td> {{ $headerorder->status }} </td>
+                                @foreach($order as $order)
 
                                 <td>
-                                    <a href="{{ url('detail_order', $headerorder->id) }}" class="btn btn-info">Detail Order</a>
+                                    <img height="100" width="180" src="/product/{{ $order->image }}">
                                 </td>
+
+                                <td>{{ $order->product_title }} </td>
+                                <td>{{ $order->quantity }} </td>
+                                <td>{{ $order->price }} </td>
+                                <td>{{ $order->name }}</td>
+                                <td>{{ $order->address }}</td>
+                                <td>{{ $order->email }}</td>
+
 
                             </tr><!-- END TR-->
                             @endforeach

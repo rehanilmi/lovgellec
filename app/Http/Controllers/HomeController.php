@@ -277,40 +277,6 @@ class HomeController extends Controller
             return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
         }
 
-        // public function kurir()
-        // {
-        //        $provinces = Province::pluck('name', 'province_id');
-        //        return view('home.ongkir', compact('provinces'));
-        //    }
-        //
-        //    public function getCities($id)
-        //    {
-        //        $city = City::where('province_id', $id)->pluck('name', 'city_id');
-        //        return response()->json($city);
-        //    }
-        //
-        //    public function check_ongkir(Request $request)
-        //    {
-        //        $cost = RajaOngkir::ongkosKirim([
-        //            'origin'        => 345, // ID kota/kabupaten asal
-        //            'destination'   => $request->city_destination, // ID kota/kabupaten tujuan
-        //            'weight'        => 1000, // berat barang dalam gram
-        //            'courier'       => $request->courier // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
-        //        ])->get();
-        //
-        //        return response()->json($cost);
-        //
-        //        // $nama_jasa = $cost[0]['name'];
-        //        //      foreach ($cost[0]['costs'] as $row)
-        //        //      {
-        //        //      	$result[] = array(
-        //        //      		'description' => $row['description'],
-        //        //      		'biaya'       => $row['cost'][0]['value'],
-        //        //      		'etd'         => $row['cost'][0]['etd']
-        //        //      	);
-        //        //      }
-        //
-        //    }
 
         public function get_province(){
         $curl = curl_init();
@@ -406,21 +372,6 @@ class HomeController extends Controller
         }
         }
 
-        public function show_order()
-        {
-            if (Auth::id())
-            {
-                $user=Auth::user();
-                $userid=$user->id;
-                $order=order::where('user_id','=',$userid)->get();
-                return view('home.order', compact('order'));
-            }
-            else
-            {
-                return redirect('login');
-            }
-        }
-
         public function cancel_order($id)
         {
             $order=order::find($id);
@@ -456,8 +407,97 @@ class HomeController extends Controller
             return view('home.contact');
         }
 
-        public function do_create_order(){
-
+        //
+        public function order()
+        {
+            if (Auth::id())
+            {
+                $user=Auth::user();
+                $userid=$user->id;
+                $headerorder=HeaderOrder::where('user_id','=',$userid)->get();
+                return view('home.order', compact('headerorder'));
+            }
+            else
+            {
+                return redirect('login');
+            }
         }
+        //
+        public function checkout(Request $request)
+         {
+           if(Auth::id())
+           {
+               $user=Auth::user();
+               $userid=$user->id;
+               $data=cart::where('user_id','=',$userid)->get();
+               $totalbelanja=0;
+               $provinsi = $this->get_province();
+               $showcart = $this->show_cart();
+               $totalCart =  cart::where('user_id','=',$userid)->count();
+               $ldate = date('Y-m-d H:i:s');
+               //
+               foreach($data as $dt => $val)
+               {
+                 $totalprice = $val->price * $val->quantity;
+                 $totalbelanja+= $totalprice;
+
+                 // $cart_id=$val->id;
+                 // $cart=cart::find($cart_id);
+                 // $cart->delete();
+
+               }
+
+                 $headerorder=new HeaderOrder;
+                 $headerorder->tanggal_order=$ldate;
+                 $headerorder->user_id=$userid;
+                 $headerorder->count=$totalCart;
+                 $headerorder->total_belanja=$request->totalbelanja;
+                 $headerorder->total_ongkir=$request->totalongkir;
+                 $headerorder->total=$request->totalbelanja + $request->totalongkir;
+                 $headerorder->status = 'belum-bayar';
+                 $headerorder->kurir = $request->kurir;
+                 $headerorder->layanan = $request->service;
+                 $headerorder->save();
+
+
+                $cart=cart::where('user_id','=',$userid)->get();
+
+                foreach($cart as $row){
+
+                  $order=new order;
+                  $order->header_order_id=$headerorder->id;
+                  $order->name=$row->name;
+                  $order->email=$row->email;
+                  $order->phone=$row->phone;
+                  $order->address=$request->nama_provinsi;
+                  $order->user_id=$row->user_id;
+                  $order->product_title=$row->product_title;
+                  $order->price=$row->price;
+                  $order->quantity=$row->quantity;
+                  $order->image=$row->image;
+                  $order->product_id=$row->Product_id;
+                  $order->image=$row->image;
+                  $order->save();
+
+                  $cart_id=$row->id;
+                  $cart=cart::find($cart_id);
+                  $cart->delete();
+                }
+                return redirect(url('/order'))->with('alert-success', 'Order berhasil dibuat');
+
+            }
+            else
+            {
+               return redirect('login');
+            }
+
+          }
+
+          public function detail_order($id)
+          {
+              $order=Order::where('header_order_id','=',$id)->get();
+              return view('home.detail_order', compact('order',));
+          }
+
 
 }
