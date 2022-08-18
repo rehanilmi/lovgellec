@@ -61,12 +61,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleInputName1">Harga Diskon</label>
-                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Masukkan Harga Diskon (jika ada)"
-                    name="dis_price" value="{{ $product->discount_price }}">
-                </div>
-
-                <div class="form-group">
                     <label for="exampleInputName1">Jumlah Produk</label>
                     <input type="text" class="form-control" id="exampleInputName1" placeholder="Masukkan Jumlah Produk"
                     min="0" name="quantity" value="{{ $product->quantity }}" required="">

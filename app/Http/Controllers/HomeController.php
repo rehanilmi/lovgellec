@@ -208,51 +208,51 @@ class HomeController extends Controller
 
             foreach($data as $dt => $val)
             {
-              $totalprice = $val->price * $val->quantity;
-              $totalbelanja+= $totalprice;
+            $totalprice = $val->price * $val->quantity;
+            $totalbelanja+= $totalprice;
 
-              $params = [
-                          'transaction_details' => array(
-                              'order_id' => rand(),
-                              'gross_amount' => 10000,
-                          ),
-                          'item_details' => array(
-                              [
-                                  'id' => $val->id,
-                                  'price' => $totalbelanja,
-                                  'quantity' => $val->quantity,
-                                  'name' => $val->product_title
-                              ],
+            $params = [
+                        'transaction_details' => array(
+                            'order_id' => rand(),
+                            'gross_amount' => 10000,
+                        ),
+                        'item_details' => array(
+                            [
+                                'id' => $val->id,
+                                'price' => $totalbelanja,
+                                'quantity' => $val->quantity,
+                                'name' => $val->product_title
+                            ],
                             ),
 
-                          'customer_details' => array(
-                              'first_name' => 'sdr',
-                              'last_name' => $val->name,
-                              'email' => $val->email,
-                              'phone' => $val->phone,
+                        'customer_details' => array(
+                            'first_name' => 'sdr',
+                            'last_name' => $val->name,
+                            'email' => $val->email,
+                            'phone' => $val->phone,
                             ),
-                          ];
+                        ];
 
-                      $order=new order;
+                    $order=new order;
 
-                      $order->name=$val->name;
-                      $order->email=$val->email;
-                      $order->phone=$val->phone;
-                      $order->address=$val->address;
-                      $order->user_id=$val->user_id;
-                      $order->product_title=$val->product_title;
-                      $order->price=$val->price;
-                      $order->quantity=$val->quantity;
-                      $order->image=$val->image;
-                      $order->product_id=$val->Product_id;
+                    $order->name=$val->name;
+                    $order->email=$val->email;
+                    $order->phone=$val->phone;
+                    $order->address=$val->address;
+                    $order->user_id=$val->user_id;
+                    $order->product_title=$val->product_title;
+                    $order->price=$val->price;
+                    $order->quantity=$val->quantity;
+                    $order->image=$val->image;
+                    $order->product_id=$val->Product_id;
 
-                      $order->payment_status='transfer';
-                      // $order->delivery_status='Sedang dalam proses';
-                      $order->save();
+                    $order->payment_status='transfer';
+                    // $order->delivery_status='Sedang dalam proses';
+                    $order->save();
 
-                      $cart_id=$val->id;
-                      $cart=cart::find($cart_id);
-                      $cart->delete();
+                    $cart_id=$val->id;
+                    $cart=cart::find($cart_id);
+                    $cart->delete();
 
                 }
 
@@ -262,20 +262,20 @@ class HomeController extends Controller
 
         public function payment_post(Request $request)
         {
-               $json = json_decode($request->get('json'));
-               $order = new Order();
-               $order->payment_status = $json->transaction_status;
-               $order->name = $request->name;
-               $order->email = $request->email;
-               $order->phone = $request->phone;
-               // $order->transaction_id = $json->transaction_id;
-               // $order->order_id = $json->order_id;
-               // $order->gross_amount = $json->gross_amount;
-               // $order->payment_type = $json->payment_type;
-               // $order->payment_code = isset($json->payment_code) ? $json->payment_code : null;
-               // $order->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
-               return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
-           }
+            $json = json_decode($request->get('json'));
+            $order = new Order();
+            $order->payment_status = $json->transaction_status;
+            $order->name = $request->name;
+            $order->email = $request->email;
+            $order->phone = $request->phone;
+            // $order->transaction_id = $json->transaction_id;
+            // $order->order_id = $json->order_id;
+            // $order->gross_amount = $json->gross_amount;
+            // $order->payment_type = $json->payment_type;
+            // $order->payment_code = isset($json->payment_code) ? $json->payment_code : null;
+            // $order->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
+            return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
+        }
 
         // public function kurir()
         // {
@@ -313,9 +313,9 @@ class HomeController extends Controller
         //    }
 
         public function get_province(){
-          $curl = curl_init();
+        $curl = curl_init();
 
-          curl_setopt_array($curl, array(
+        curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -324,31 +324,31 @@ class HomeController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
-              "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
+            "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
             ),
-          ));
+        ));
 
-          $response = curl_exec($curl);
-          $err = curl_error($curl);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-          curl_close($curl);
+        curl_close($curl);
 
-          if ($err) {
-          echo "cURL Error #:" . $err;
-          } else {
-          //ini kita decode data nya terlebih dahulu
-          $response=json_decode($response,true);
-          //ini untuk mengambil data provinsi yang ada di dalam rajaongkir resul
-          $data_pengirim = $response['rajaongkir']['results'];
-          return $data_pengirim;
-          }
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        } else {
+        //ini kita decode data nya terlebih dahulu
+        $response=json_decode($response,true);
+        //ini untuk mengambil data provinsi yang ada di dalam rajaongkir resul
+        $data_pengirim = $response['rajaongkir']['results'];
+        return $data_pengirim;
+        }
 
         }
 
         public function get_city($id){
-          $curl = curl_init();
+        $curl = curl_init();
 
-          curl_setopt_array($curl, array(
+        curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.rajaongkir.com/starter/city?&province=$id",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -357,22 +357,22 @@ class HomeController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
-              "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
+            "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
             ),
-          ));
+        ));
 
-          $response = curl_exec($curl);
-          $err = curl_error($curl);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-          curl_close($curl);
+        curl_close($curl);
 
-          if ($err) {
-          echo "cURL Error #:" . $err;
-          } else {
-          $response=json_decode($response,true);
-          $data_kota = $response['rajaongkir']['results'];
-          return json_encode($data_kota);
-          }
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        } else {
+        $response=json_decode($response,true);
+        $data_kota = $response['rajaongkir']['results'];
+        return json_encode($data_kota);
+        }
 
         }
 

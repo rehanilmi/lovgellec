@@ -66,6 +66,7 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
 
 
+
     route::get('/product_details/{id}',[HomeController::class,'product_details']);
 
     route::post('/add_cart/{id}',[HomeController::class,'add_cart']);

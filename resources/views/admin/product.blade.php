@@ -54,11 +54,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleInputName1">Harga Diskon</label>
-                    <input type="text" class="form-control" name="discount_price" id="exampleInputName1" placeholder="Masukkan Harga Diskon">
-                </div>
-
-                <div class="form-group">
                     <label for="exampleInputName1">Jumlah Produk</label>
                     <input type="text" class="form-control" name="quantity" id="exampleInputName1" placeholder="Masukkan Jumlah Produk" required="">
                 </div>

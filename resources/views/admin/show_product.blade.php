@@ -32,7 +32,6 @@
                                     <th> Jumlah </th>
                                     <th> Kategori </th>
                                     <th> Harga </th>
-                                    <th> Harga Diskon </th>
                                     <th> Gambar </th>
                                     <th> Delete </th>
                                     <th> Update </th>
@@ -49,7 +48,6 @@
                                         <td> {{ $product->quantity }} </td>
                                         <td> {{ $product->category }} </td>
                                         <td> {{ $product->price }} </td>
-                                        <td> {{ $product->discount_price }} </td>
                                         
                                         <td> 
                                             <img class="img_size" src="/product/{{ $product->image }}">

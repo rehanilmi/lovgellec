@@ -40,11 +40,11 @@
       @include('home.footer')
       <!-- footer end -->
       
-      <div class="cpy_">
+      <!-- <div class="cpy_">
          <p class="mx-auto">© 2022 LoveGell Shop</a><br>
             All Rights Reserved </a>
          </p>
-      </div>
+      </div> -->
 
 <!-- jQery -->
 <!-- loader -->
