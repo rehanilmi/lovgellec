@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('header_orders', function (Blueprint $table) {
-            $table->id("id_header_order");
-            $table->date("tanggal_order");
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->bigInteger('header_order_id');
         });
     }
 

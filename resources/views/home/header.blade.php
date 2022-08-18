@@ -34,12 +34,12 @@
                     <li class="nav-item active"><a href="" class="nav-link">  </a></li>
                     <li class="nav-item"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
                     <li class="nav-item"><a href="{{ url ('products') }}" class="nav-link">Product</a></li>
-                    <li class="nav-item"><a href="{{ url('show_order') }}" class="nav-link">Order</a></li>
+                    <li class="nav-item"><a href="{{ url('order') }}" class="nav-link">Order</a></li>
                     <li class="nav-item"><a href="{{ url('contact') }}" class="nav-link">Contact</a></li>
                     <li class="nav-item cta cta-colored"><a href="{{ url('show_cart') }}" class="nav-link"><span class="icon-shopping_cart"></span></a></li>
-    
+
                     @if (Route::has('login'))
-                    
+
                     @auth
                     <li class="nav-link">
                         <x-app-layout>

@@ -91,6 +91,13 @@
               <a href="{{ url ('payment') }}" class="btn btn-danger"> Virtual Account Billing </a>
             </div>
         </div> -->
+  <form class="forms-sample" action="{{ url('/checkout') }}" method="POST" enctype="multipart/form-data">
+     @csrf
+    <div class="row">
+        <input type="hidden" class="form-control" id="nama_provinsi" name="nama_provinsi" placeholder="ini untuk menangkap nama provinsi ">
+        <input type="hidden" class="form-control" id="nama_kota" name="nama_kota" placeholder="ini untuk menangkap nama kota">
+        <input type="hidden" name="service" id="service" class="form-control" placeholder="service">
+    </div>
 
         <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
         <label for="provinsi">Provinsi Tujuan</label>
@@ -139,11 +146,18 @@
                 <p class="d-flex">
                  Ongkos Kirim  : Rp <span id="ongkoskirim" name="ongkoskirim"></span>
                 </p>
+                <input type="text" class="form-control" name="totalongkir" id="totalongkir">
                 <p class="d-flex">
                 Total &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp: Rp <span id="total" name="total"></span>
                </p>
             </div>
         </div>
+
+        <div class="div_design">
+            <input type="submit" value="checkout" class="btn btn-primary">
+        </div>
+
+    </form>
 
 
 
