@@ -42,12 +42,12 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ url('laporan') }}">
                     <span class="menu-title">Cetak Laporan</span>
                     <i class="mdi mdi-format-list-bulleted menu-icon"></i>
                 </a>
-            </li>
+            </li> -->
 
         </ul>
     </nav>

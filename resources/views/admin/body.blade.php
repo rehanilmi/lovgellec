@@ -16,7 +16,7 @@
                 <div class="card bg-gradient-success card-img-holder text-white">
                 <div class="card-body">
                     
-                    <h4 class="font-weight-normal mb-3">Total Product <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Total Produk <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5">{{ $total_product }}</h2>
                     
@@ -27,7 +27,7 @@
                 <div class="card bg-gradient-success card-img-holder text-white">
                 <div class="card-body">
                     
-                    <h4 class="font-weight-normal mb-3">Total Order<i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Total Pesanan<i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5">{{ $total_order }}</h2>
                     
@@ -49,7 +49,7 @@
                 <div class="card bg-gradient-danger card-img-holder text-white">
                 <div class="card-body">
                     
-                    <h4 class="font-weight-normal mb-3">Total Revenue<i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Total Pendapatan<i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5">Rp.{{ $total_revenue }}</h2>
                     
@@ -60,7 +60,7 @@
                 <div class="card bg-gradient-danger card-img-holder text-white">
                 <div class="card-body">
                     
-                    <h4 class="font-weight-normal mb-3">Order Delivered<i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Pesanan Terkirim<i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5">{{ $total_delivered }}</h2>
                     
@@ -71,7 +71,7 @@
                 <div class="card bg-gradient-danger card-img-holder text-white">
                 <div class="card-body">
                     
-                    <h4 class="font-weight-normal mb-3">Order Processing<i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    <h4 class="font-weight-normal mb-3">Pesanan Diproses<i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
                     <h2 class="mb-5">{{ $total_processing }}</h2>
                 </div>

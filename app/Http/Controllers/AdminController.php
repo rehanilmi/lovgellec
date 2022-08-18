@@ -57,7 +57,6 @@ class AdminController extends Controller
         $product->title=$request->title;
         $product->description=$request->description;
         $product->price=$request->price;
-        $product->discount_price=$request->dis_price;
         $product->quantity=$request->quantity;
         $product->category=$request->category;
         
@@ -99,7 +98,6 @@ class AdminController extends Controller
                 $product->title=$request->title;
                 $product->description=$request->description;
                 $product->price=$request->price;
-                $product->discount_price=$request->dis_price;
                 $product->category=$request->category;
                 $product->quantity=$request->quantity;
                 
@@ -164,8 +162,8 @@ class AdminController extends Controller
                 
             ];
             
-            Notification::send($order,new SendEmailNotification($details));
-            return redirect()->back();
+            //Notification::send($order,new SendEmailNotification($details));
+            //return redirect()->back();
         }
 
         public function searchdata(Request $request)
@@ -179,4 +177,6 @@ class AdminController extends Controller
 
             return view ('admin.order', compact('order'));
         }
+
+        
 }

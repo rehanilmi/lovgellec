@@ -7,57 +7,52 @@
 <body>
 	<style type="text/css">
 		table tr td,
-		table tr th{
+		table tr th
+        {
 			font-size: 9pt;
 		}
 	</style>
-        @page
-        {
-        size: a4 landscape;
-        }
 
 	<center>
-		<h5>Membuat Laporan PDF Dengan DOMPDF Laravel</h4>
-		<h6><a target="_blank" href="https://www.malasngoding.com/membuat-laporan-…n-dompdf-laravel/">www.malasngoding.com</a></h5>
+		<h5>Pengiriman</h4>
+		<br> </br>
 	</center>
 
 	<table class='table table-bordered'>
         <thead>
             <tr>
-                <th style="padding: 10px;"> Customer Name</th>
-                <th style="padding: 10px;"> Customer Email</th>
-                <th style="padding: 10px;"> Customer Phone</th>
-                <th style="padding: 10px;"> Customer Address</th>
-                <th style="padding: 10px;"> Customer Id</th>
-                <th style="padding: 10px;"> Product Name</th>
-                <th style="padding: 10px;"> Product Price</th>
-                <th style="padding: 10px;"> Product Quantity</th>
-                <th style="padding: 10px;"> Payment Status</th>
-                <th style="padding: 10px;"> Product Id</th>
+                <th style="padding: 10px;"> Id</th>
+                <th style="padding: 10px;"> Nama</th>
+                <th style="padding: 10px;"> Email</th>
+                <th style="padding: 10px;"> No. HP</th>
+                <th style="padding: 10px;"> Alamat</th>
+                
+                <th style="padding: 10px;"> Id Produk</th>
+                <th style="padding: 10px;"> Produk</th>
+                <th style="padding: 10px;"> Harga</th>
+                <th style="padding: 10px;"> Jumlah</th>
+                <th style="padding: 10px;"> Status Pembayaran</th>
+                <th style="padding: 10px;"> Gambar</th>
+            </tr>
             </tr>
         </thead>
 
         <tbody>
             <tr>
+                <td> {{ $order->user_id }} </td>
                 <td>  {{ $order->name }} </td>
                 <td>  {{ $order->email }} </td>
                 <td> {{ $order->phone }} </td>
                 <td>  {{ $order->address }} </td>
-                <td> {{ $order->user_id }} </td>
 
+                <td> {{ $order->product_id }} </td>
                 <td> {{ $order->product_title }} </td>
-
                 <td> {{ $order->price }} </td>
                 <td> {{ $order->quantity }} </td>
                 <td> {{ $order->payment_status }} </td>
-                <td> {{ $order->product_id }} </td>
+                <td> <img height="40" width="55" src="product/{{ $order->image }}"> </td>
             </tr>
         </tbody>
     </table>
-
-<img height="250" width="450" src="product/{{ $order->image }}">
-
-
-
 </body>
 </html> 
