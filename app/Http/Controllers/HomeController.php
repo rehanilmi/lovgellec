@@ -454,8 +454,9 @@ class HomeController extends Controller
                  $headerorder->total_belanja=$request->totalbelanja;
                  $headerorder->total_ongkir=$request->totalongkir;
                  $headerorder->total=$request->totalbelanja + $request->totalongkir;
-                 $headerorder->status = 'belum-bayar';
+                 $headerorder->metode_pembayaran =$request->metode_pembayaran;
                  $headerorder->kurir = $request->kurir;
+                 $headerorder->status = 'sedang diproses';
                  $headerorder->layanan = $request->service;
                  $headerorder->save();
 

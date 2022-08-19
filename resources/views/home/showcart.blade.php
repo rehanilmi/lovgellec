@@ -152,7 +152,17 @@
                </p>
             </div>
         </div>
-
+        <div class="col-lg-4 mt-5 cart-wrap ftco-animate ">
+        <label>Metode Pembayaran<span>*</span>
+        </label>
+        <select name="metode_pembayaran" id="metode_pembayaran" class="form-control">
+        <option value="">Metode Pembayaran</option>
+        <option value="cod">Cash On Delivery (COD)</option>
+        <option value="transfer">Transfer</option>
+        </select>
+        <span id="selected" name="selected"></span>
+        <!-- <input type="text" class="form-control" id="metodepembayaran" name="metodepembayaran" placeholder="ini untuk menangkap nama kota"> -->
+        </div>
         <div class="div_design">
             <input type="submit" value="checkout" class="btn btn-primary">
         </div>
@@ -245,4 +255,5 @@ $('select[name="layanan"]').on('change', function(){
         let total = parseInt(totalbelanja) + parseInt(harga_ongkir);
         $("#total").append(total);
     });
+
 </script>

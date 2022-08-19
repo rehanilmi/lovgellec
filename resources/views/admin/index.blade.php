@@ -23,11 +23,11 @@
             </div>
         </form>
     </div>
-    
+
     <ul class="navbar-nav navbar-nav-right">
         <li>
             <x-app-layout>
-        
+
             </x-app-layout>
         </li>
     </ul>
@@ -90,7 +90,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('order') }}">
+                    <a class="nav-link" href="{{ url('order_adm') }}">
                         <span class="menu-title">Order</span>
                         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
                     </a>
@@ -119,62 +119,62 @@
                 <div class="col-md-4 stretch-card grid-margin">
                     <div class="card bg-gradient-success card-img-holder text-white">
                     <div class="card-body">
-                        
+
                         <h4 class="font-weight-normal mb-3">Total Product <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">{{ $total_product }}</h2>
-                        
+
                     </div>
                     </div>
                 </div>
                 <div class="col-md-4 stretch-card grid-margin">
                     <div class="card bg-gradient-success card-img-holder text-white">
                     <div class="card-body">
-                        
+
                         <h4 class="font-weight-normal mb-3">Total Order<i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">{{ $total_order }}</h2>
-                        
+
                     </div>
                     </div>
                 </div>
                 <div class="col-md-4 stretch-card grid-margin">
                     <div class="card bg-gradient-success card-img-holder text-white">
                     <div class="card-body">
-                        
+
                         <h4 class="font-weight-normal mb-3">Total Customer<i class="mdi mdi-diamond mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">{{ $total_user }}</h2>
-                        
+
                     </div>
                     </div>
                 </div>
                 <div class="col-md-4 stretch-card grid-margin">
                     <div class="card bg-gradient-danger card-img-holder text-white">
                     <div class="card-body">
-                        
+
                         <h4 class="font-weight-normal mb-3">Total Revenue<i class="mdi mdi-diamond mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">Rp.{{ $total_revenue }}</h2>
-                        
+
                     </div>
                     </div>
                 </div>
                 <div class="col-md-4 stretch-card grid-margin">
                     <div class="card bg-gradient-danger card-img-holder text-white">
                     <div class="card-body">
-                        
+
                         <h4 class="font-weight-normal mb-3">Order Delivered<i class="mdi mdi-diamond mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">{{ $total_delivered }}</h2>
-                        
+
                     </div>
                     </div>
                 </div>
                 <div class="col-md-4 stretch-card grid-margin">
                     <div class="card bg-gradient-danger card-img-holder text-white">
                     <div class="card-body">
-                        
+
                         <h4 class="font-weight-normal mb-3">Order Processing<i class="mdi mdi-diamond mdi-24px float-right"></i>
                         </h4>
                         <h2 class="mb-5">{{ $total_processing }}</h2>
