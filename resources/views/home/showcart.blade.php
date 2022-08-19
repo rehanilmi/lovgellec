@@ -140,13 +140,13 @@
             <div class="cart-total mb-3">
                 <h3>Cart Totals</h3>
                 <p class="d-flex">
-                  <span>Total Belanja : Rp.{{$totalbelanja}}</span>
+                  <span>Total Belanja : Rp{{$totalbelanja}}</span>
                   <input type="hidden" value="{{$totalbelanja}}" class="form-control" name="totalbelanja" id="totalbelanja">
                 </p>
                 <p class="d-flex">
                  Ongkos Kirim  : Rp <span id="ongkoskirim" name="ongkoskirim"></span>
                 </p>
-                <input type="text" class="form-control" name="totalongkir" id="totalongkir">
+                <input type="hidden" class="form-control" name="totalongkir" id="totalongkir">
                 <p class="d-flex">
                 Total &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp: Rp <span id="total" name="total"></span>
                </p>
