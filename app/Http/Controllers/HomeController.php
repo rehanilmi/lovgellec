@@ -189,93 +189,60 @@ class HomeController extends Controller
             return redirect()->back()->with('message','We have received your order. We will connect with you soon..');
         }
 
-        public function payment(Request $request)
-        {
-            // Set your Merchant Server Key
-            \Midtrans\Config::$serverKey = "SB-Mid-server-WkAHMa1WfB8zECN5nFR3jrOz";
-            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-            \Midtrans\Config::$isProduction = false;
-            // Set sanitization on (default)
-            \Midtrans\Config::$isSanitized = true;
-            // Set 3DS transaction for credit card to true
-            \Midtrans\Config::$is3ds = true;
+        public function payment($id)
+             {
+                 // Set your Merchant Server Key
+                 \Midtrans\Config::$serverKey = "SB-Mid-server-WkAHMa1WfB8zECN5nFR3jrOz";
+                 // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+                 \Midtrans\Config::$isProduction = false;
+                 // Set sanitization on (default)
+                 \Midtrans\Config::$isSanitized = true;
+                 // Set 3DS transaction for credit card to true
+                 \Midtrans\Config::$is3ds = true;
 
-            $user=Auth::user();
-            $userid=$user->id;
-            $data=cart::where('user_id','=',$userid)->get();
-            $totalbelanja=0;
+                 $user=Auth::user();
+                 $userid=$user->id;
+                 $data=HeaderOrder::where('user_id','=',$userid)->get();
+                 // $totalbelanja=0;
 
 
-            foreach($data as $dt => $val)
-            {
-            $totalprice = $val->price * $val->quantity;
-            $totalbelanja+= $totalprice;
+                 foreach($data as $dt => $val)
+                 {
+                    // $dd = ::where('header_order_id','=',$val->id)->get();
 
-            $params = [
+                    $params = array(
                         'transaction_details' => array(
                             'order_id' => rand(),
-                            'gross_amount' => 10000,
+                            'gross_amount' => $val->total,
                         ),
-                        'item_details' => array(
-                            [
-                                'id' => $val->id,
-                                'price' => $totalbelanja,
-                                'quantity' => $val->quantity,
-                                'name' => $val->product_title
-                            ],
-                            ),
-
                         'customer_details' => array(
                             'first_name' => 'sdr',
-                            'last_name' => $val->name,
-                            'email' => $val->email,
-                            'phone' => $val->phone,
-                            ),
-                        ];
+                            'last_name' => $user->name,
+                            'email' => $user->email,
+                            'phone' => $user->phone,
+                        ),
+                    );
+                  }
 
-                    $order=new order;
-
-                    $order->name=$val->name;
-                    $order->email=$val->email;
-                    $order->phone=$val->phone;
-                    $order->address=$val->address;
-                    $order->user_id=$val->user_id;
-                    $order->product_title=$val->product_title;
-                    $order->price=$val->price;
-                    $order->quantity=$val->quantity;
-                    $order->image=$val->image;
-                    $order->product_id=$val->Product_id;
-
-                    $order->payment_status='transfer';
-                    // $order->delivery_status='Sedang dalam proses';
-                    $order->save();
-
-                    $cart_id=$val->id;
-                    $cart=cart::find($cart_id);
-                    $cart->delete();
-
-                }
-
-            $snapToken = \Midtrans\Snap::getSnapToken($params);
-            return view('home.payment', compact ('snapToken'));
-        }
-
-        public function payment_post(Request $request)
-        {
-            $json = json_decode($request->get('json'));
-            $order = new Order();
-            $order->payment_status = $json->transaction_status;
-            $order->name = $request->name;
-            $order->email = $request->email;
-            $order->phone = $request->phone;
-            // $order->transaction_id = $json->transaction_id;
-            // $order->order_id = $json->order_id;
-            // $order->gross_amount = $json->gross_amount;
-            // $order->payment_type = $json->payment_type;
-            // $order->payment_code = isset($json->payment_code) ? $json->payment_code : null;
-            // $order->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
-            return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
-        }
+                 $snapToken = \Midtrans\Snap::getSnapToken($params);
+                 return view('home.payment', compact ('snapToken'));
+             }
+        // public function payment_post(Request $request)
+        // {
+        //     $json = json_decode($request->get('json'));
+        //     $order = new Order();
+        //     $order->payment_status = $json->transaction_status;
+        //     $order->name = $request->name;
+        //     $order->email = $request->email;
+        //     $order->phone = $request->phone;
+        //     // $order->transaction_id = $json->transaction_id;
+        //     // $order->order_id = $json->order_id;
+        //     // $order->gross_amount = $json->gross_amount;
+        //     // $order->payment_type = $json->payment_type;
+        //     // $order->payment_code = isset($json->payment_code) ? $json->payment_code : null;
+        //     // $order->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
+        //     return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
+        // }
 
 
         public function get_province(){
@@ -458,7 +425,20 @@ class HomeController extends Controller
                  $headerorder->kurir = $request->kurir;
                  $headerorder->status = 'sedang diproses';
                  $headerorder->layanan = $request->service;
-                 $headerorder->save();
+
+                 if($headerorder->metode_pembayaran == 'transfer')
+                  {
+                    $headerorder->payment_status = 1;
+                    $headerorder->save();
+                  }
+                  elseif ($headerorder->metode_pembayaran == 'cod') {
+                    $headerorder->payment_status = 3;
+                    $headerorder->save();
+                    // code...
+                  }
+                  else {
+                    $headerorder->save();
+                  }
 
 
                 $cart=cart::where('user_id','=',$userid)->get();
@@ -484,7 +464,8 @@ class HomeController extends Controller
                   $cart=cart::find($cart_id);
                   $cart->delete();
                 }
-                return redirect(url('/order'))->with('alert-success', 'Order berhasil dibuat');
+
+             return redirect(url('/order'))->with('alert-success', 'Order berhasil dibuat');
 
             }
             else
