@@ -17,7 +17,8 @@
                                 <th> Jumlah </th>
                                 <th> Kurir </th>
                                 <th> Layanan </th>
-                                <th> Status </th>
+                                <th> Metode Pembayaran </th>
+                                <th> Status Barang </th>
                                 <th> Aksi </th>
 
                             </tr>
@@ -32,6 +33,7 @@
                                 <td> {{ $headerorder->count }} </td>
                                 <td> {{ $headerorder->kurir }} </td>
                                 <td> {{ $headerorder->layanan }} </td>
+                                <td> {{ $headerorder->metode_pembayaran }} </td>
                                 <td> {{ $headerorder->status }} </td>
 
                                 <td>

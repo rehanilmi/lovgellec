@@ -12,7 +12,7 @@
     <!-- partial:partials/_sidebar.html -->
     @include('admin.includes.sidebar')
     <!-- partial -->
-    
+
     <div class="main-panel">
         <div class="content-wrapper">
             <div style="padding-left: 400px; padding-bottom: 30px;">
@@ -48,12 +48,12 @@
                                 <th> Print PDF</th>
                                 <th> Send Email</th>
                                 <th> Keterangan</th>
-                                
-                                
+
+
                             </tr>
                             </thead>
                         <tbody>
-                            @forelse($order as $order)
+                            @forelse($pesanan as $order)
                             <tr>
                                 <tr>
                                     <td>{{ $order->name }}</td>
@@ -65,33 +65,33 @@
                                     <td>{{ $order->price }}</td>
                                     <td>{{ $order->payment_status }}</td>
                                     <td>{{ $order->delivery_status }}</td>
-                                    
+
                                     <td>
                                         <img class="img_size" src="/product/{{ $order->image }}">
                                     </td>
-                                    
+
                                     <td>
                                         <a href="{{ url ('print_pdf',$order->id) }}" class="btn btn-success">Print PDF</a>
                                     </td>
-                                    
+
                                     <td>
                                         <a href="{{ url('send_email',$order->id) }}" class="btn btn-info">Send Email</a>
                                     </td>
-                                    
+
                                     <!-- aksi -->
                                     <td>
                                         @if($order->delivery_status=='processing')
                                         <a href="{{ url('delivered',$order->id) }}"
                                             onclick="return confirm('Are you sure this product is delivered?!')"
                                             class="btn btn-primary">Delivered</a>
-                                        
+
                                         @else
                                         <p style="color:green;"> Delivered</p>
-                                        
+
                                         @endif
                                     </td>
                                     <!-- aksi selesai-->
-                                
+
                                 </tr>
                                 @empty
                                 <tr>
@@ -102,10 +102,10 @@
                                 @endforelse
                         </tbody>
                         </table>
-            
-    
+
+
     <!-- partial:partials/_footer.html -->
-    
+
     <!-- partial -->
     </div>
     <!-- main-panel ends -->

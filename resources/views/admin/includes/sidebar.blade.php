@@ -26,17 +26,17 @@
                 </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                
+
                 <li class="nav-item"> <a class="nav-link" href="{{ url('/show_product') }}"> Semua Produk</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ url('view_category')}}"> Kategori Produk</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ url('/view_product') }}"> Tambah Produk</a></li>
-                
+
                 </ul>
             </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('order') }}">
+                <a class="nav-link" href="{{ url('order_adm') }}">
                     <span class="menu-title">Pesanan</span>
                     <i class="mdi mdi-format-list-bulleted menu-icon"></i>
                 </a>

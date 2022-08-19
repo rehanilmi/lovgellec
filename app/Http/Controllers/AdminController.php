@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function view_category()
-    {   
+    {
         if(Auth::id())
         {
             $data=category::all();
@@ -35,7 +35,7 @@ class AdminController extends Controller
         $data->category_name=$request->category;
         $data->save();
         return redirect()->back()->with('message','Category Added Successfully');
-        
+
     }
 
     public function delete_category($id)
@@ -59,12 +59,12 @@ class AdminController extends Controller
         $product->price=$request->price;
         $product->quantity=$request->quantity;
         $product->category=$request->category;
-        
+
         $image=$request->image;
         $imagename=time().'.'.$image->getClientOriginalExtension();
         $request->image->move('product', $imagename);
         $product->image=$imagename;
-        
+
         $product->save();
         return redirect()->back()->with('message','Product Added Successfully');
     }
@@ -79,7 +79,7 @@ class AdminController extends Controller
         {
             $product=product::find($id);
             $product->delete();
-            
+
             return redirect()->back()->with('message','Product Deleted Successfully');
         }
 
@@ -100,16 +100,16 @@ class AdminController extends Controller
                 $product->price=$request->price;
                 $product->category=$request->category;
                 $product->quantity=$request->quantity;
-                
+
                 $image=$request->image;
                 if($image)
                     {
                         $imagename=time().'.'.$image->getClientOriginalExtension();
                         $request->image->move('product', $imagename);
-                        
+
                         $product->image=$imagename;
                     }
-                
+
                 $product->save();
                 return redirect()->back()->with('message','Product Updated Successfully');
             }
@@ -117,13 +117,13 @@ class AdminController extends Controller
             {
                 return redirect('login');
             }
-            
+
         }
 
         public function order_adm()
         {
-            $order=order::all();
-            return view('admin.order_adm', compact('order_adm'));
+            $pesanan=order::all();
+            return view('admin.order_adm', compact('pesanan'));
         }
 
         public function delivered($id)
@@ -132,7 +132,7 @@ class AdminController extends Controller
             $order->delivery_status="Terkirim";
             $order->payment_status='Sudah dibayar';
             $order->save();
-            
+
             return redirect()->back();
         }
 
@@ -140,7 +140,7 @@ class AdminController extends Controller
         {
             $order=order::find($id);
             $pdf=PDF::loadView('admin.pdf', compact('order'));
-            return $pdf->setPaper('a4', 'landscape')->download('order_details.pdf');   
+            return $pdf->setPaper('a4', 'landscape')->download('order_details.pdf');
         }
 
         public function send_email($id)
@@ -159,9 +159,9 @@ class AdminController extends Controller
                 'button' => $request->button,
                 'url' => $request->url,
                 'lastline' => $request->lastline,
-                
+
             ];
-            
+
             //Notification::send($order,new SendEmailNotification($details));
             //return redirect()->back();
         }
@@ -178,5 +178,5 @@ class AdminController extends Controller
             return view ('admin.order', compact('order'));
         }
 
-        
+
 }
