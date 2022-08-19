@@ -3,6 +3,9 @@
 
     <section class="ftco-section ftco-cart">
             <div class="container">
+              @if(empty($headerorder) || count($headerorder) ==0 )
+              <center><p>tidak ada product di order</p></center>
+              @else
                 <div class="row">
                 <div class="col-md-12 ftco-animate">
                     <div class="cart-list">
@@ -19,6 +22,8 @@
                                 <th> Layanan </th>
                                 <th> Metode Pembayaran </th>
                                 <th> Status Barang </th>
+                                <th> Status Pembayaran </th>
+                                <th> Pembayaran</th>
                                 <th> Aksi </th>
 
                             </tr>
@@ -27,15 +32,37 @@
                                 @foreach($headerorder as $headerorder)
                                 <td> {{ $headerorder->tanggal_order }} </td>
                                 <td> 783626543{{ $headerorder->id}} </td>
-                                <td> {{ $headerorder->total_belanja }} </td>
-                                <td> {{ $headerorder->total_ongkir }} </td>
-                                <td> {{ $headerorder->total }} </td>
+                                <td> {{ number_format($headerorder->total_belanja) }} </td>
+                                <td> {{ number_format($headerorder->total_ongkir) }} </td>
+                                <td> {{ number_format($headerorder->total) }} </td>
                                 <td> {{ $headerorder->count }} </td>
                                 <td> {{ $headerorder->kurir }} </td>
                                 <td> {{ $headerorder->layanan }} </td>
                                 <td> {{ $headerorder->metode_pembayaran }} </td>
                                 <td> {{ $headerorder->status }} </td>
+                                <td><b>
+                                        @if ($headerorder->payment_status == 1)
+                                            Menunggu Pembayaran
+                                        @elseif ($headerorder->payment_status == 2)
+                                            Sudah Dibayar
+                                        @elseif ($headerorder->payment_status == 3)
+                                            COD
+                                        @else
+                                            Kadaluarsa
+                                        @endif
+                                    </b></td>
 
+                                <td>
+                                  @if ($headerorder->payment_status == 1)
+                                  <a href="{{ url('payment', $headerorder->id) }}" class="btn btn-primary">Bayar Sekarang</a>
+                                  @elseif ($headerorder->payment_status == 2)
+                                  Pembayaran berhasil
+                                  @elseif ($headerorder->payment_status == 3)
+                                  COD
+                                  @else
+                                  Kadaluarsa
+                                  @endif
+                                </td>
                                 <td>
                                     <a href="{{ url('detail_order', $headerorder->id) }}" class="btn btn-info">Detail Order</a>
                                 </td>
@@ -74,7 +101,8 @@
         </div>
         </div>
     </div>
-    </section>
+      @endif
+ </section>
 
 @include('home.footer')
 @include('home.script')

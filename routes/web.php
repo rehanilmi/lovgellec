@@ -91,7 +91,7 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/laporan',[HomeController::class,'laporan']);
 
-    route::get('/payment',[HomeController::class,'payment']);
+    route::get('/payment/{id}',[HomeController::class,'payment']);
     //
     //route::post('/payment',[HomeController::class,'payment_post']);
 
