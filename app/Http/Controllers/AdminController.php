@@ -120,10 +120,10 @@ class AdminController extends Controller
             
         }
 
-        public function order()
+        public function order_adm()
         {
             $order=order::all();
-            return view('admin.order', compact('order'));
+            return view('admin.order_adm', compact('order_adm'));
         }
 
         public function delivered($id)

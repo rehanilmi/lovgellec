@@ -47,7 +47,7 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::post('/update_product_confirm/{id}',[AdminController::class,'update_product_confirm']);
 
-    route::get('/order',[AdminController::class,'order']);
+    route::get('/order_adm',[AdminController::class,'order_adm']);
 
     route::get('/delivered/{id}',[AdminController::class,'delivered']);
 
@@ -91,9 +91,9 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/laporan',[HomeController::class,'laporan']);
 
-    // route::get('/payment',[HomeController::class,'payment']);
+    route::get('/payment',[HomeController::class,'payment']);
     //
-    // route::post('/payment',[HomeController::class,'payment_post']);
+    //route::post('/payment',[HomeController::class,'payment_post']);
 
     // route::get('/order/create',[HomeController::class,'do_create_order']);
 
