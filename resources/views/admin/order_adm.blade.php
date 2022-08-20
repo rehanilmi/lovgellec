@@ -35,16 +35,20 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th> Nama</th>
-                                <th> Email</th>
-                                <th> Alamat</th>
-                                <th> Phone</th>
-                                <th> Nama Produk</th>
-                                <th> Jumlah</th>
-                                <th> Harga</th>
+                                <th>Invoice</th>
+                                <th>Tanggal</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Alamat</th>
+                                <th>Phone</th>
+                                <th>Jumlah</th>
+                                <th>Total Belanja</th>
+                                <th>Total Ongkir</th>
+                                <th>Total Semua</th>
+                                <th>Kurir</th>
+                                <th>Layanan</th>
                                 <th> Status Pembayaran</th>
                                 <th> Status Pengiriman</th>
-                                <th> Gambar</th>
                                 <th> Print PDF</th>
                                 <th> Send Email</th>
                                 <th> Keterangan</th>
@@ -53,23 +57,45 @@
                             </tr>
                             </thead>
                         <tbody>
-                            @forelse($pesanan as $order)
+                            @forelse($pesanan as $user => $order)
                             <tr>
                                 <tr>
-                                    <td>{{ $order->name }}</td>
-                                    <td>{{ $order->email }}</td>
-                                    <td>{{ $order->address }}</td>
-                                    <td>{{ $order->phone }}</td>
-                                    <td>{{ $order->product_title }}</td>
-                                    <td>{{ $order->quantity }}</td>
-                                    <td>Rp. {{ number_format ($order->price) }}</td>
-                                    <td>{{ $order->payment_status }}</td>
-                                    <td>{{ $order->delivery_status }}</td>
-
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->tanggal_order }}</td>
+                                    <td>{{ $order->user-> name }}</td>
+                                    <td>{{ $order->user-> email }}</td>
+                                    <td>{{ $order->user-> address }}</td>
+                                    <td>{{ $order->user-> phone }}</td>
+                                    <td>{{ $order->count }}</td>
+                                    <td>{{ number_format($order->total_belanja) }}</td>
+                                    <td>{{ number_format($order->total_ongkir) }}</td>
+                                    <td>{{ number_format($order->total) }}</td>
+                                    <td>{{ $order->kurir }}</td>
+                                    <td>{{ $order->layanan }}</td>
                                     <td>
-                                        <img class="img_size" src="/product/{{ $order->image }}">
+                                        @if ($order->payment_status == 1)
+                                        <a href="{{ url('bayar',$order->id) }}"
+                                        onclick="return confirm('Apakah Produk Sudah Dibayar?!')"
+                                        class="btn btn-primary">Belum Dibayar</a>
+                                        @elseif ($order->payment_status == 2)
+                                            Sudah Dibayar
+                                        @elseif ($order->payment_status == 3)
+                                            COD
+                                        @else
+                                            Kadaluarsa
+                                        @endif
                                     </td>
-
+                                    <td>  @if ($order->status == 'Sedang Diproses')
+                                      <a href="{{ url('proses',$order->id) }}"
+                                      onclick="return confirm('Apakah Produk Sudah Dikirim?!')"
+                                      class="btn btn-primary">Sedang Diproses</a>
+                                      @elseif ($order->status == 'Sudah Dikirim')
+                                      <a href="{{ url('selesai',$order->id) }}"
+                                      onclick="return confirm('Apakah Produk Sudah Diterima?!')"
+                                      class="btn btn-primary">Sudah Dikirim</a>
+                                      @else
+                                          {{ $order->status }}
+                                      @endif
                                     <td>
                                         <a href="{{ url ('print_pdf',$order->id) }}" class="btn btn-success">Print PDF</a>
                                     </td>
@@ -78,19 +104,8 @@
                                         <a href="{{ url('send_email',$order->id) }}" class="btn btn-info">Send Email</a>
                                     </td>
 
-                                    <!-- aksi -->
-                                    <td>
-                                        @if($order->delivery_status=='processing')
-                                        <a href="{{ url('delivered',$order->id) }}"
-                                            onclick="return confirm('Are you sure this product is delivered?!')"
-                                            class="btn btn-primary">Delivered</a>
 
-                                        @else
-                                        <p style="color:green;"> Delivered</p>
 
-                                        @endif
-                                    </td>
-                                    <!-- aksi selesai-->
 
                                 </tr>
                                 @empty

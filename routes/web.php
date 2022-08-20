@@ -48,7 +48,11 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/order_adm',[AdminController::class,'order_adm']);
 
-    route::get('/delivered/{id}',[AdminController::class,'delivered']);
+    route::get('/bayar/{id}',[AdminController::class,'bayar']);
+
+    route::get('/proses/{id}',[AdminController::class,'proses']);
+
+    route::get('/selesai/{id}',[AdminController::class,'selesai']);
 
     route::get('/print_pdf/{id}',[AdminController::class,'print_pdf']);
 

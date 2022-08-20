@@ -22,38 +22,53 @@
 	<table class='table table-bordered'>
         <thead>
             <tr>
-                <th style="padding: 10px;"> Id</th>
+                <th style="padding: 10px;"> Invoice</th>
+                <th style="padding: 10px;"> Tanggal</th>
                 <th style="padding: 10px;"> Nama</th>
                 <th style="padding: 10px;"> Email</th>
-                <th style="padding: 10px;"> No. HP</th>
                 <th style="padding: 10px;"> Alamat</th>
-                
-                <th style="padding: 10px;"> Id Produk</th>
-                <th style="padding: 10px;"> Produk</th>
-                <th style="padding: 10px;"> Harga</th>
-                <th style="padding: 10px;"> Jumlah</th>
+								<th style="padding: 10px;"> Phone</th>
+								<th style="padding: 10px;"> Jumlah</th>
+								<th style="padding: 10px;"> Total Belanja</th>
+
+                <th style="padding: 10px;"> Total Ongkir</th>
+                <th style="padding: 10px;"> Total Semua</th>
+                <th style="padding: 10px;"> Kurir</th>
+                <th style="padding: 10px;"> Layanan</th>
                 <th style="padding: 10px;"> Status Pembayaran</th>
-                <th style="padding: 10px;"> Gambar</th>
+                <th style="padding: 10px;"> Status Pengiriman</th>
             </tr>
             </tr>
         </thead>
 
         <tbody>
             <tr>
-                <td> {{ $order->user_id }} </td>
-                <td> {{ $order->name }} </td>
-                <td> {{ $order->email }} </td>
-                <td> {{ $order->phone }} </td>
-                <td> {{ $order->address }} </td>
-
-                <td> {{ $order->product_id }} </td>
-                <td> {{ $order->product_title }} </td>
-                <td> Rp. {{ number_format ($order->price) }} </td>
-                <td> {{ $order->quantity }} </td>
-                <td> {{ $order->payment_status }} </td>
-                <td> <img height="40" width="55" src="product/{{ $order->image }}"> </td>
+							<td>{{ $order->id }}</td>
+							<td>{{ $order->tanggal_order }}</td>
+							<td>{{ $order->user-> name }}</td>
+							<td>{{ $order->user-> email }}</td>
+							<td>{{ $order->user-> address }}</td>
+							<td>{{ $order->user-> phone }}</td>
+							<td>{{ $order->count }}</td>
+							<td>{{ number_format($order->total_belanja) }}</td>
+							<td>{{ number_format($order->total_ongkir) }}</td>
+							<td>{{ number_format($order->total) }}</td>
+							<td>{{ $order->kurir }}</td>
+							<td>{{ $order->layanan }}</td>
+							<td><b>
+									@if ($order->payment_status == 1)
+											Menunggu Pembayaran
+									@elseif ($order->payment_status == 2)
+											Sudah Dibayar
+									@elseif ($order->payment_status == 3)
+											COD
+									@else
+											Kadaluarsa
+									@endif
+							</b></td>
+							<td>{{ $order->status }}</td>
             </tr>
         </tbody>
     </table>
 </body>
-</html> 
+</html>
