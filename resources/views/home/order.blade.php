@@ -31,7 +31,7 @@
                             <tbody>
                                 @foreach($headerorder as $headerorder)
                                 <td> {{ $headerorder->tanggal_order }} </td>
-                                <td> 783626543{{ $headerorder->id}} </td>
+                                <td> {{ $headerorder->id}} </td>
                                 <td> {{ number_format($headerorder->total_belanja) }} </td>
                                 <td> {{ number_format($headerorder->total_ongkir) }} </td>
                                 <td> {{ number_format($headerorder->total) }} </td>

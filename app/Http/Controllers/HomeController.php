@@ -41,21 +41,21 @@ class HomeController extends Controller
             $total_user=user::all()->count();
             $order=order::all();
             $total_revenue=0;
-            
+
             foreach($order as $order)
             {
                 $total_revenue=$total_revenue + $order->price;
             }
-            
+
             $total_delivered=order::where('delivery_status','=','delivered')->
             get()->count();
             $total_processing=order::where('delivery_status','=','processing')->
             get()->count();
-            
+
             return view('admin.home', compact('total_product','total_order','total_user',
             'total_revenue','total_delivered','total_processing'));
-        
-        
+
+
         }
         else
         {
@@ -83,13 +83,13 @@ class HomeController extends Controller
             $product=product::find($id);
             $product_exist_id=cart::where('Product_id','=',$id)->where
             ('user_id','=',$userid)->get('id')->first();
-            
+
             if($product_exist_id!=null)
             {
                 $cart=cart::find($product_exist_id)->first();
                 $quantity=$cart->quantity;
                 $cart->quantity=$quantity + $cart->quantity;
-                
+
                     if($product->discount_price!=null)
                     {
                         $cart->price=$product->discount_price * $cart->quantity;
@@ -98,11 +98,11 @@ class HomeController extends Controller
                     {
                         $cart->price=$product->price * $cart->quantity;
                     }
-                
+
                 $cart->save();
                 Alert::success('Product Added Successfully','We have added product to the cart');
                 return redirect()->back();
-            
+
             }
             else
             {
@@ -112,7 +112,7 @@ class HomeController extends Controller
                 $cart->phone=$user->phone;
                 $cart->address=$user->address;
                 $cart->user_id=$user->id;
-                
+
                 $cart->product_title=$product->title;
                 if($product->discount_price!=null)
                 {
@@ -122,16 +122,16 @@ class HomeController extends Controller
                 {
                     $cart->price=$product->price * $request->quantity;
                 }
-                
+
                 $cart->image=$product->image;
                 $cart->Product_id=$product->id;
                 $cart->quantity=$request->quantity;
-                
+
                 $cart->save();
                 return redirect()->back()->with('message','Product Added Successfully');
             }
-        
-        
+
+
         }
         else
         {
@@ -148,7 +148,7 @@ class HomeController extends Controller
                 $id=Auth::user()->id;
                 $cart=cart::where('user_id','=',$id)->get();
                 $provinsi = $this->get_province();
-                
+
                 return view('home.showcart', compact('cart','provinsi'));
             }
             else
@@ -173,11 +173,11 @@ class HomeController extends Controller
             $user=Auth::user();
             $userid=$user->id;
             $data=cart::where('user_id','=',$userid)->get();
-            
+
             foreach($data as $data)
             {
                 $order=new order;
-                
+
                 $order->name=$data->name;
                 $order->email=$data->email;
                 $order->phone=$data->phone;
@@ -188,11 +188,11 @@ class HomeController extends Controller
                 $order->quantity=$data->quantity;
                 $order->image=$data->image;
                 $order->product_id=$data->Product_id;
-                
+
                 $order->payment_status='COD';
                 $order->delivery_status='Sedang dalam proses';
                 $order->save();
-                
+
                 $cart_id=$data->id;
                 $cart=cart::find($cart_id);
                 $cart->delete();
@@ -212,17 +212,17 @@ class HomeController extends Controller
                 \Midtrans\Config::$isSanitized = true;
                 // Set 3DS transaction for credit card to true
                 \Midtrans\Config::$is3ds = true;
-                
+
                 $user=Auth::user();
                 $userid=$user->id;
                 $data=HeaderOrder::where('user_id','=',$userid)->get();
                 // $totalbelanja=0;
-                
-                
+
+
                 foreach($data as $dt => $val)
                 {
                     // $dd = ::where('header_order_id','=',$val->id)->get();
-                    
+
                     $params = array(
                         'transaction_details' => array(
                             'order_id' => rand(),
@@ -236,7 +236,7 @@ class HomeController extends Controller
                         ),
                     );
                 }
-                
+
                 $snapToken = \Midtrans\Snap::getSnapToken($params);
                 return view('home.payment', compact ('snapToken'));
             }
@@ -261,7 +261,7 @@ class HomeController extends Controller
 
         public function get_province(){
         $curl = curl_init();
-        
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
             CURLOPT_RETURNTRANSFER => true,
@@ -274,12 +274,12 @@ class HomeController extends Controller
             "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
             ),
         ));
-        
+
         $response = curl_exec($curl);
         $err = curl_error($curl);
-        
+
         curl_close($curl);
-        
+
         if ($err) {
         echo "cURL Error #:" . $err;
         } else {
@@ -289,14 +289,14 @@ class HomeController extends Controller
         $data_pengirim = $response['rajaongkir']['results'];
         return $data_pengirim;
         }
-        
+
         }
 
 
 
         public function get_city($id){
         $curl = curl_init();
-        
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.rajaongkir.com/starter/city?&province=$id",
             CURLOPT_RETURNTRANSFER => true,
@@ -309,12 +309,12 @@ class HomeController extends Controller
             "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
             ),
         ));
-        
+
         $response = curl_exec($curl);
         $err = curl_error($curl);
-        
+
         curl_close($curl);
-        
+
         if ($err) {
         echo "cURL Error #:" . $err;
         } else {
@@ -322,7 +322,7 @@ class HomeController extends Controller
         $data_kota = $response['rajaongkir']['results'];
         return json_encode($data_kota);
         }
-        
+
         }
 
 
@@ -440,13 +440,13 @@ class HomeController extends Controller
             {
                 $totalprice = $val->price * $val->quantity;
                 $totalbelanja+= $totalprice;
-                
+
                 // $cart_id=$val->id;
                 // $cart=cart::find($cart_id);
                 // $cart->delete();
-            
+
             }
-            
+
                 $headerorder=new HeaderOrder;
                 $headerorder->tanggal_order=$ldate;
                 $headerorder->user_id=$userid;
@@ -456,15 +456,15 @@ class HomeController extends Controller
                 $headerorder->total=$request->totalbelanja + $request->totalongkir;
                 $headerorder->metode_pembayaran =$request->metode_pembayaran;
                 $headerorder->kurir = $request->kurir;
-                $headerorder->status = 'sedang diproses';
+                $headerorder->status = 'Sedang Diproses';
                 $headerorder->layanan = $request->service;
-                
-                if($headerorder->metode_pembayaran == 'transfer')
+
+                if($headerorder->metode_pembayaran == 'Transfer')
                 {
                     $headerorder->payment_status = 1;
                     $headerorder->save();
                 }
-                elseif ($headerorder->metode_pembayaran == 'cod') {
+                elseif ($headerorder->metode_pembayaran == 'COD') {
                     $headerorder->payment_status = 3;
                     $headerorder->save();
                     // code...
@@ -472,12 +472,12 @@ class HomeController extends Controller
                 else {
                     $headerorder->save();
                 }
-                
-                
+
+
                 $cart=cart::where('user_id','=',$userid)->get();
-                
+
                 foreach($cart as $row){
-                
+
                 $order=new order;
                 $order->header_order_id=$headerorder->id;
                 $order->name=$row->name;
@@ -492,14 +492,14 @@ class HomeController extends Controller
                 $order->product_id=$row->Product_id;
                 $order->image=$row->image;
                 $order->save();
-                
+
                 $cart_id=$row->id;
                 $cart=cart::find($cart_id);
                 $cart->delete();
                 }
-            
+
             return redirect(url('/order'))->with('alert-success', 'Order berhasil dibuat');
-            
+
             }
             else
             {

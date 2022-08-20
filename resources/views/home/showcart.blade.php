@@ -157,8 +157,8 @@
         </label>
         <select name="metode_pembayaran" id="metode_pembayaran" class="form-control">
         <option value="">Metode Pembayaran</option>
-        <option value="cod">Cash On Delivery (COD)</option>
-        <option value="transfer">Transfer</option>
+        <option value="COD">Cash On Delivery (COD)</option>
+        <option value="Transfer">Transfer</option>
         </select>
         <span id="selected" name="selected"></span>
         <!-- <input type="text" class="form-control" id="metodepembayaran" name="metodepembayaran" placeholder="ini untuk menangkap nama kota"> -->
