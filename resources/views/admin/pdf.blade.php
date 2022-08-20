@@ -14,6 +14,7 @@
 	</style>
 
 	<center>
+        <!-- <img width="100" src="/images/logo.png" alt="#"> -->
 		<h5>Pengiriman</h4>
 		<br> </br>
 	</center>
@@ -40,14 +41,14 @@
         <tbody>
             <tr>
                 <td> {{ $order->user_id }} </td>
-                <td>  {{ $order->name }} </td>
-                <td>  {{ $order->email }} </td>
+                <td> {{ $order->name }} </td>
+                <td> {{ $order->email }} </td>
                 <td> {{ $order->phone }} </td>
-                <td>  {{ $order->address }} </td>
+                <td> {{ $order->address }} </td>
 
                 <td> {{ $order->product_id }} </td>
                 <td> {{ $order->product_title }} </td>
-                <td> {{ $order->price }} </td>
+                <td> Rp. {{ number_format ($order->price) }} </td>
                 <td> {{ $order->quantity }} </td>
                 <td> {{ $order->payment_status }} </td>
                 <td> <img height="40" width="55" src="product/{{ $order->image }}"> </td>

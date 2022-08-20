@@ -1,18 +1,13 @@
-<section class="product_section layout_padding">
+@include('home.header')
+
+<section class="ftco-section">
    <div class="container">
-      <div class="heading_container heading_center">  
-      <div>
-
-   <form action="{{ url('search_product') }}" method="GET">
-      @csrf
-      <input style="width: 500px;" type="text" name="search" placeholder="Search For Something">
-      <input type="submit" value="search">
-   </form>
-
-   </div>
-
+         <div class="row justify-content-center mb-3 pb-3">
+      <div class="col-md-12 heading-section text-center ftco-animate">
+         <h2 class="mb-4" style="background-color:mistyrose">Our Products</h2>
+         </div>
       </div>
-      
+
       @if(session()->has('message'))
       <div class="alert alert-success">
          <button type="button" class="close" data-dismiss="alert"
@@ -21,74 +16,51 @@
       </div>
       @endif
 
-      <div class="row">
       
+      <div class="row">
          @foreach ($product as $products)
-         
-         <div class="col-sm-6 col-md-4 col-lg-4">
-            <div class="box">
-               <div class="option_container">
-                  <div class="options">
-                     <a href="{{ url('product_details', $products->id) }}" class="option1">
-                     Product Details
-                     </a>
-                     
-                     <form action="{{ url ('add_cart', $products->id) }}" method="Post">
-                        @csrf
-                        <div class="row">
-                           <div class="col-md-4">
-                              <input type="number" name="quantity"
-                              value="1" min="1" style="width: 100px">
-                           </div>
-                           
-                           <div class="col-md-4">
-                              <input type="submit" value="add To Cart">
-                           </div>
-                        </div>
-                     </form>
-                  
+         <div class="col-md-6 col-lg-3 ftco-animate">
+            <div class="product">
+               <a href="#" class="img-prod"><img class="img-fluid" src="product/{{ $products->image }}" alt="" alt="Colorlib Template">
+                  <div class="overlay"></div>
+               </a>
+               <div class="text py-3 pb-4 px-3 text-center">
+                  <h3><a href="#">{{ $products->title }}</a></h3>
+                  <div class="d-flex">
+                     <div class="pricing">
+                        <p class="price"><span>Rp. {{ number_format ($products->price) }}</span></p>
+                     </div>
+                  </div>
+                  <div class="bottom-area d-flex px-3">
+                     <div class="m-auto d-flex">
+                        <a href="{{ url('product_details', $products->id) }}" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                           <span><i class="ion-ios-menu"></i></span>
+                        </a>
+                     </div>
                   </div>
                </div>
-               <div class="img-box">
-                  <img src="product/{{ $products->image }}" alt="">
-               </div>
-               <div class="detail-box">
-                  <h5>
-                     {{ $products->title }}
-                  </h5>
-                  
-                  @if($products->discount_price!=null)
-                  <h6 style="color: red">
-                     Discount Price
-                     <br>
-                     {{ $products->discount_price }}
-                  </h6>
-                  
-                  <h6 style="text-decoration: line-through; color: blue">
-                     Price
-                     <br>
-                     {{ $products->price }}
-                  </h6>
-                  
-                  @else
-                  <h6 style="color: blue">
-                     Price
-                     <br>
-                     {{ $products->price }}
-                  </h6>
-                  
-                  @endif
-                  
-                  
+
+               <form action="{{ url ('add_cart', $products->id) }}" method="Post">
+                  @csrf
+                  <div class="bottom-area d-flex px-6">
+                     <div class="m-auto d-flex">
+                        <input type="number" name="quantity"
+                        value="1" min="1" style="width: 100px">
+                     </div>
+                     <div class="m-auto d-flex">
+                        <button type="submit" class="btn btn-black"> + </button>
+                     </div>
+                  </div>
+               </form>
+
+            </div>
+         </div>
+         @endforeach
                </div>
             </div>
          </div>
-         
-         @endforeach
-         
-         <span style="padding-top: 20px;">
-         {!!$product->withQueryString()->links('pagination::bootstrap-5')!!}
-         </span>
-   
+      </div>
    </div>
 </section>
+
+@include('home.footer')

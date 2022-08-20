@@ -62,7 +62,7 @@
                                     <td>{{ $order->phone }}</td>
                                     <td>{{ $order->product_title }}</td>
                                     <td>{{ $order->quantity }}</td>
-                                    <td>{{ $order->price }}</td>
+                                    <td>Rp. {{ number_format ($order->price) }}</td>
                                     <td>{{ $order->payment_status }}</td>
                                     <td>{{ $order->delivery_status }}</td>
 

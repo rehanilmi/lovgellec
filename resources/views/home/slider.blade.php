@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="slider-item" style="background-image: url(home/images/bg_5.png);">
+    <div class="slider-item" style="background-image: url(home/images/rainbowkecil.png);">
       <div class="overlay"></div>
       <div class="container">
         <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
