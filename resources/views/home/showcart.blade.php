@@ -144,7 +144,7 @@
                     <input type="hidden" value="{{$totalbelanja}}" class="form-control" name="totalbelanja" id="totalbelanja">
                 </p>
                 <p class="d-flex">
-                    Ongkos Kirim  : Rp <span id="ongkoskirim" name="ongkoskirim"></span>
+                    Ongkos Kirim  : Rp. <span id="ongkoskirim" name="ongkoskirim"></span>
                 </p>
                 <input type="hidden" class="form-control" name="totalongkir" id="totalongkir">
                 <p class="d-flex">
