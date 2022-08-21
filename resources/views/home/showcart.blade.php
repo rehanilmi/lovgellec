@@ -38,7 +38,7 @@
                         $no=1;
                         $totalbelanja=0;
                         ?>
-                        @foreach($cart as $ct => $val)
+                        @foreach($cart as $val)
                         <?php
                           $totalprice = $val["price"] * $val["quantity"]
                         ?>

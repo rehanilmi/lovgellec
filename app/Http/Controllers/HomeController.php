@@ -88,16 +88,8 @@ class HomeController extends Controller
             {
                 $cart=cart::find($product_exist_id)->first();
                 $quantity=$cart->quantity;
-                $cart->quantity=$quantity + $cart->quantity;
-
-                    if($product->discount_price!=null)
-                    {
-                        $cart->price=$product->discount_price * $cart->quantity;
-                    }
-                    else
-                    {
-                        $cart->price=$product->price * $cart->quantity;
-                    }
+                $cart->quantity=$quantity + $request->quantity;
+                $cart->price=$product->price;
 
                 $cart->save();
                 Alert::success('Product Added Successfully','We have added product to the cart');
@@ -112,17 +104,8 @@ class HomeController extends Controller
                 $cart->phone=$user->phone;
                 $cart->address=$user->address;
                 $cart->user_id=$user->id;
-
                 $cart->product_title=$product->title;
-                if($product->discount_price!=null)
-                {
-                    $cart->price=$product->discount_price * $request->quantity;
-                }
-                else
-                {
-                    $cart->price=$product->price * $request->quantity;
-                }
-
+                $cart->price=$product->price;
                 $cart->image=$product->image;
                 $cart->Product_id=$product->id;
                 $cart->quantity=$request->quantity;
