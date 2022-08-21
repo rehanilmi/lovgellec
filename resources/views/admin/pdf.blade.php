@@ -9,7 +9,7 @@
 		table tr td,
 		table tr th
         {
-			font-size: 9pt;
+			font-size: 6pt;
 		}
 	</style>
 
@@ -36,7 +36,7 @@
                 <th style="padding: 10px;"> Kurir</th>
                 <th style="padding: 10px;"> Layanan</th>
                 <th style="padding: 10px;"> Status Pembayaran</th>
-                <th style="padding: 10px;"> Status Pengiriman</th>
+                <!-- <th style="padding: 10px;"> Status Pengiriman</th> -->
             </tr>
             </tr>
         </thead>
@@ -66,7 +66,7 @@
 											Kadaluarsa
 									@endif
 							</b></td>
-							<td>{{ $order->status }}</td>
+							<!-- <td>{{ $order->status }}</td> -->
             </tr>
         </tbody>
     </table>
