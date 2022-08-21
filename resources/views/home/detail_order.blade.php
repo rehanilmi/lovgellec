@@ -27,7 +27,7 @@
 
                                 <td>{{ $order->product_title }} </td>
                                 <td>{{ $order->quantity }} </td>
-                                <td>{{ $order->price }} </td>
+                                <td> Rp.{{ number_format ($order->price) }} </td>
                                 <td>{{ $order->name }}</td>
                                 <td>{{ $order->address }}</td>
                                 <td>{{ $order->email }}</td>

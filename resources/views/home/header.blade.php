@@ -1,6 +1,6 @@
 <header class="header_section">
     <body class="goto-here">
-        <div class="py-1 bg-info">
+        <div class="py-1 bg-black">
         <div class="container">
             <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
                 <div class="col-lg-12 d-block">

@@ -1,7 +1,7 @@
 @include('home.css')
 @include('home.header')
 
-<div class="hero-wrap hero-bread" style="background-image: url('home/images/bg_1.jpg');">
+<div class="hero-wrap hero-bread" style="background-image: url('home/images/bgpink.png');">
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center">
       <div class="col-md-9 ftco-animate text-center">
@@ -18,22 +18,22 @@
       <div class="w-100"></div>
       <div class="col-md-3 d-flex">
           <div class="info bg-white p-4">
-            <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+            <p><span>Alamat:</span> <a href="#"> Jalan Tan Malaka No.91, Kelurahan Tigo Koto Diate, Kecamatan Payakumbuh Utara, Kota Payakumbuh, Sumatera Barat</a></p>
           </div>
       </div>
       <div class="col-md-3 d-flex">
           <div class="info bg-white p-4">
-            <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+            <p><span>Phone:</span> <a href="tel://1234567920">+62 812 7707 5067</a></p>
           </div>
       </div>
       <div class="col-md-3 d-flex">
           <div class="info bg-white p-4">
-            <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+            <p><span>Email:</span> <a href="mailto:info@yoursite.com">lovegellshop@gmail.com</a></p>
           </div>
       </div>
       <div class="col-md-3 d-flex">
           <div class="info bg-white p-4">
-            <p><span>Website</span> <a href="#">yoursite.com</a></p>
+            <p><span>Instagram: </span> <a href="#">lovegell__</a></p>
           </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
             <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
           </div>
           <div class="form-group">
-            <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+            <input type="submit" value="Send Message" class="btn btn-black py-3 px-5">
           </div>
         </form>
       

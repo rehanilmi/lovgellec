@@ -27,6 +27,7 @@
                 <div class="card">
                 <div class="card-body">
                     <h3>Tambah Kategori</h3>
+                    <br> </br>
                     <form action="{{ url('/add_category') }}" method="POST">
                         @csrf
                         <input class="col-12 grid-margin" type="text" name="category" placeholder="Masukkan kategori baru" required="">

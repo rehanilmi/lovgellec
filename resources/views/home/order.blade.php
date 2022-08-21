@@ -3,9 +3,9 @@
 
     <section class="ftco-section ftco-cart">
             <div class="container">
-              @if(empty($headerorder) || count($headerorder) ==0 )
-              <center><p>tidak ada product di order</p></center>
-              @else
+                @if(empty($headerorder) || count($headerorder) ==0 )
+                <center><p>tidak ada product di order</p></center>
+                @else
                 <div class="row">
                 <div class="col-md-12 ftco-animate">
                     <div class="cart-list">
@@ -54,7 +54,7 @@
 
                                 <td>
                                   @if ($headerorder->payment_status == 1)
-                                  <a href="{{ url('payment', $headerorder->id) }}" class="btn btn-primary">Bayar Sekarang</a>
+                                  <a href="{{ url('payment', $headerorder->id) }}" class="btn btn-danger">Bayar Sekarang</a>
                                   @elseif ($headerorder->payment_status == 2)
                                   Pembayaran berhasil
                                   @elseif ($headerorder->payment_status == 3)

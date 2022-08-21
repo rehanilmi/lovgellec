@@ -4,7 +4,7 @@
          <div class="col-md-12 heading-section text-center ftco-animate">
             <h2 class="mb-4">Our Products</h2>
             <span class="subheading">Made With Love</span>
-   <br> </br>
+            <br> </br>
             <form action="{{ url('product_search') }}" method="GET">
                   @csrf
                   <input style="width: 500px;" type="text" name="search" placeholder="Search For Something">
@@ -21,12 +21,10 @@
             {{ session()->get('message') }}
          </div>
          @endif
-         
+
          <div class="container">
          <div class="row">
-         
             @foreach ($product as $products)
-            
             <div class="col-md-6 col-lg-3 ftco-animate">
                <div class="product">
                   <div class="product">
@@ -38,7 +36,7 @@
                         <h3><a href="#">{{ $products->title }}</a></h3>
                         <div class="d-flex">
                            <div class="pricing">
-                                 <p class="price"></span><span class="price-sale">{{ $products->price }}</span></p>
+                                 <p class="price"></span><span class="price-sale">Rp. {{ number_format ($products->price) }}</span></p>
                            </div>
                         </div>
 
@@ -46,11 +44,8 @@
                            <div class="m-auto d-flex">
                               <a href="{{ url('product_details', $products->id) }}" class="buy-now d-flex justify-content-center align-items-center mx-1">
                                  <span> <i class="ion-ios-menu"></i> </span>
-                                 
                               </a>
                            </div>
-
-                           
 
                            <form action="{{ url ('add_cart', $products->id) }}" method="Post">
                               @csrf
@@ -67,11 +62,8 @@
                               </div>
                            </form>
 
-                        
-
                         </div>
                      </div>
-                     
                   </div>
                </div>
             </div>

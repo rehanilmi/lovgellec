@@ -55,7 +55,7 @@
                             </td>
 
                             <td class="price">
-                                <h3>Rp. {{ $val["price"]}} </h3>
+                                <h3>Rp. {{ number_format ($val["price"])}} </h3>
                             </td>
 
                             <td class="quantity">
@@ -64,7 +64,7 @@
                             </div>
                             </td>
 
-                            <td class="total"> Rp. {{ $totalprice }} </td>
+                            <td class="total"> Rp. {{ number_format ($totalprice) }} </td>
 
                         <td class="product-remove"><a href="{{ url ('remove_cart',$val->id) }}"
                             onclick="return confirm('Are you sure to remove the product?')">
@@ -73,26 +73,26 @@
                     </tr><!-- END TR-->
 
                     <?php
-                      $totalbelanja+= $totalprice;
-                     ?>
+                        $totalbelanja+= $totalprice;
+                    ?>
 
                     @endforeach
                 </table>
-        <!-- <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+        <!--<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
             <div class="cart-total mb-3">
             <h3>Cek Ongkir</h3>
             <a href="{{ url ('ongkir') }}"  class="btn btn-danger"> Tambahkan Ongkir </a>
-          </div>
+            </div>
         </div>
         <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
             <div class="cart-total mb-3">
-              <h3>Metode Pembayaran</h3>
-              <a href="{{ url ('cash_order') }}" onclick="return confirm('Are you sure to order?')" class="btn btn-danger" style="margin-bottom: 10px;"> Cash On Delivery </a>
-              <a href="{{ url ('payment') }}" class="btn btn-danger"> Virtual Account Billing </a>
+                <h3>Metode Pembayaran</h3>
+                <a href="{{ url ('cash_order') }}" onclick="return confirm('Are you sure to order?')" class="btn btn-danger" style="margin-bottom: 10px;"> Cash On Delivery </a>
+                <a href="{{ url ('payment') }}" class="btn btn-danger"> Virtual Account Billing </a>
             </div>
         </div> -->
-  <form class="forms-sample" action="{{ url('/checkout') }}" method="POST" enctype="multipart/form-data">
-     @csrf
+<form class="forms-sample" action="{{ url('/checkout') }}" method="POST" enctype="multipart/form-data">
+    @csrf
     <div class="row">
         <input type="hidden" class="form-control" id="nama_provinsi" name="nama_provinsi" placeholder="ini untuk menangkap nama provinsi ">
         <input type="hidden" class="form-control" id="nama_kota" name="nama_kota" placeholder="ini untuk menangkap nama kota">
@@ -140,16 +140,16 @@
             <div class="cart-total mb-3">
                 <h3>Cart Totals</h3>
                 <p class="d-flex">
-                  <span>Total Belanja : Rp{{$totalbelanja}}</span>
-                  <input type="hidden" value="{{$totalbelanja}}" class="form-control" name="totalbelanja" id="totalbelanja">
+                    <span>Total Belanja : Rp. {{ number_format ($totalbelanja)}}</span>
+                    <input type="hidden" value="{{$totalbelanja}}" class="form-control" name="totalbelanja" id="totalbelanja">
                 </p>
                 <p class="d-flex">
-                 Ongkos Kirim  : Rp <span id="ongkoskirim" name="ongkoskirim"></span>
+                    Ongkos Kirim  : Rp <span id="ongkoskirim" name="ongkoskirim"></span>
                 </p>
                 <input type="hidden" class="form-control" name="totalongkir" id="totalongkir">
                 <p class="d-flex">
-                Total &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp: Rp <span id="total" name="total"></span>
-               </p>
+                Total &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp: Rp. <span id="total" name="total"></span>
+                </p>
             </div>
         </div>
         <div class="col-lg-4 mt-5 cart-wrap ftco-animate ">
@@ -172,8 +172,8 @@
 
 
 
-      </div>
-   </div>
+        </div>
+    </div>
     @endif
 </section>
 

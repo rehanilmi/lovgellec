@@ -51,7 +51,7 @@
                     
                     <h4 class="font-weight-normal mb-3">Total Pendapatan<i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">Rp.{{ $total_revenue }}</h2>
+                    <h2 class="mb-5">Rp. {{ number_format ($total_revenue) }}</h2>
                     
                 </div>
                 </div>

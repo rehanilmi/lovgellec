@@ -1,89 +1,63 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        @include('home.css')
-    </head>
-    <body>
-        <div class="hero_area">
-        <!-- header section strats -->
-        @include('home.header')
-        <!-- end header section -->
-        
-        
-        <div class="col-sm-6 col-md-4 col-lg-4" style="margin: auto; width: 50%; padding: 30px">
-                
-                <div class="img-box" style="padding: 20px">
-                <img src="/product/{{ $product->image }}" alt="">
-                </div>
-                
-                <div class="detail-box">
-                <h5>
-                {{ $product->title }}
-                </h5>
-                
-                @if($product->discount_price!=null)
-                <h6 style="color: red">
-                Discount Price
-                <br>
-                {{ $product->discount_price }}
-                </h6>
-                
-                <h6 style="text-decoration: line-through; color: blue">
-                Price
-                <br>
-                {{ $product->price }}
-                </h6>
-                
-                @else
-                <h6 style="color: blue">
-                Price
-                <br>
-                {{ $product->price }}
-                </h6>
-                
-                @endif
-                
-                
-                <h6> Product Category : {{ $product->category }} </h6>
-                <h6> Product Details : {{ $product->description }} </h6>
-                <h6> Available Quantity : {{ $product->quantity }} </h6>
-                <form action="{{ url ('add_cart', $product->id) }}" method="Post">
-                    
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-4">
-                            <input type="number" name="quantity"
-                            value="1" min="1" style="width: 100px">
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <input type="submit" value="add To Cart">
-                        </div>
+@include('home.css')
+@include('home.header')
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-5 ftco-animate">
+                <img src="/product/{{ $product->image }}" class="img-fluid" alt="Colorlib Template"></a>
+            </div>
+<br> </br>
+
+            <div class="col-lg-6 product-details pl-md-5 ftco-animate">
+                <h3> {{ $product->title }} </h3>
+                <div class="rating d-flex">
+                        <p class="text-left mr-4">
+                            <a href="#" class="mr-2">5.0</a>
+                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        </p>
+                        <!-- <p class="text-left mr-4">
+                            <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
+                        </p>
+                        <p class="text-left">
+                            <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
+                        </p> -->
                     </div>
-                </form>
-                
+
+                    <br> </br> <br> </br>
+                <p class="price"><span>Rp. {{ number_format ($product->price) }}</span></p>
+                <p>{{ $product->description }}
+                    </p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="form-group d-flex">
+                <div class="select-wrap">
                 </div>
+                </div>
+                        </div>
+            <br> </br> <br> </br>
+        </div>
+
+        <form action="{{ url ('add_cart', $product->id) }}" method="Post">
+            @csrf
+            <div class="row">
+            <div class="col-md-4">
+                <input type="number" name="quantity"
+                value="1" min="1" style="width: 100px">
+            </div>
+            
+            <div class="col-md-4">
+                <input type="submit" class="btn btn-black" value="add To Cart">
+            </div>
+            </div>
+        </form>
             </div>
         </div>
-        
-        <!-- footer start -->
-        @include('home.footer')
-        <!-- footer end -->
-        
-        <div class="cpy_">
-        <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
-        
-            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-        
-        </p>
-        </div>
-        <!-- jQery -->
-        <script src="home/js/jquery-3.4.1.min.js"></script>
-        <!-- popper js -->
-        <script src="home/js/popper.min.js"></script>
-        <!-- bootstrap js -->
-        <script src="home/js/bootstrap.js"></script>
-        <!-- custom js -->
-        <script src="home/js/custom.js"></script>
-    </body>
-</html>
+    </div>
+</section>
+
+@include('home.script')
