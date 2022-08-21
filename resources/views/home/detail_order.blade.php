@@ -9,10 +9,10 @@
                         <table class="table">
                             <thead class="thead-primary">
                             <tr class="text-center">
-                                <th> Image</th>
-                                <th> Product Name</th>
-                                <th> Quantity</th>
-                                <th> Price</th>
+                                <th> Gambar</th>
+                                <th> Nama Produk</th>
+                                <th> Jumlah</th>
+                                <th> Harga</th>
                                 <th> Nama</th>
                                 <th> Alamat</th>
                                 <th> Email</th>

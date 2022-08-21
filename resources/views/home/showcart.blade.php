@@ -26,9 +26,9 @@
                         <tr class="text-center">
                             <th>No.</th>
                             <th>Gambar</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
+                            <th>Nama Produk</th>
+                            <th>Harga</th>
+                            <th>Jumlah</th>
                             <th>Total</th>
                             <th>Remove</th>
                         </tr>
