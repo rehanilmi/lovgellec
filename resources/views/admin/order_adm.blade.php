@@ -16,13 +16,13 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div style="padding-left: 400px; padding-bottom: 30px;">
-                <form action="{{ url('search') }}" method="get">
+                <!-- <form action="{{ url('search') }}" method="get">
                     @csrf
                     <input type="text" style="color: black;" name="search"
                     placeholder="Search For Something">
                     <input type="submit" value="Search"
                     class="btn btn-outline-primary">
-                </form>
+                </form> -->
             </div>
             <div class="row">
                 <div class="col-12 grid-margin">
@@ -51,7 +51,7 @@
                                 <th> Status Pengiriman</th>
                                 <th> Print PDF</th>
                                 <th> Send Email</th>
-                                <th> Keterangan</th>
+                                <!-- <th> Keterangan</th> -->
 
 
                             </tr>
@@ -86,16 +86,16 @@
                                         @endif
                                     </td>
                                     <td>  @if ($order->status == 'Sedang Diproses')
-                                      <a href="{{ url('proses',$order->id) }}"
-                                      onclick="return confirm('Apakah Produk Sudah Dikirim?!')"
-                                      class="btn btn-primary">Sedang Diproses</a>
-                                      @elseif ($order->status == 'Sudah Dikirim')
-                                      <a href="{{ url('selesai',$order->id) }}"
-                                      onclick="return confirm('Apakah Produk Sudah Diterima?!')"
-                                      class="btn btn-primary">Sudah Dikirim</a>
-                                      @else
-                                          {{ $order->status }}
-                                      @endif
+                                        <a href="{{ url('proses',$order->id) }}"
+                                        onclick="return confirm('Apakah Produk Sudah Dikirim?!')"
+                                        class="btn btn-primary">Sedang Diproses</a>
+                                        @elseif ($order->status == 'Sudah Dikirim')
+                                        <a href="{{ url('selesai',$order->id) }}"
+                                        onclick="return confirm('Apakah Produk Sudah Diterima?!')"
+                                        class="btn btn-primary">Sudah Dikirim</a>
+                                        @else
+                                            {{ $order->status }}
+                                        @endif
                                     <td>
                                         <a href="{{ url ('print_pdf',$order->id) }}" class="btn btn-success">Print PDF</a>
                                     </td>
