@@ -30,11 +30,6 @@
 								<th style="padding: 10px;"> Phone</th>
 								<th style="padding: 10px;"> Jumlah</th>
 								<th style="padding: 10px;"> Total Belanja</th>
-
-                <th style="padding: 10px;"> Total Ongkir</th>
-                <th style="padding: 10px;"> Total Semua</th>
-                <th style="padding: 10px;"> Kurir</th>
-                <th style="padding: 10px;"> Layanan</th>
                 <th style="padding: 10px;"> Status Pembayaran</th>
                 <!-- <th style="padding: 10px;"> Status Pengiriman</th> -->
             </tr>
@@ -51,10 +46,6 @@
 							<td>{{ $order->user-> phone }}</td>
 							<td>{{ $order->count }}</td>
 							<td>{{ number_format($order->total_belanja) }}</td>
-							<td>{{ number_format($order->total_ongkir) }}</td>
-							<td>{{ number_format($order->total) }}</td>
-							<td>{{ $order->kurir }}</td>
-							<td>{{ $order->layanan }}</td>
 							<td><b>
 									@if ($order->payment_status == 1)
 											Menunggu Pembayaran

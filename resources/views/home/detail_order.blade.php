@@ -9,28 +9,28 @@
                         <table class="table">
                             <thead class="thead-primary">
                             <tr class="text-center">
+                              <th> Nama</th>
+                              <th> Email</th>
+                              <th> Alamat</th>
                                 <th> Gambar</th>
                                 <th> Nama Produk</th>
                                 <th> Jumlah</th>
                                 <th> Harga</th>
-                                <th> Nama</th>
-                                <th> Alamat</th>
-                                <th> Email</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($order as $order)
+                                @foreach($order as $user => $order)
 
+
+                                <td>{{ $order->user->name }}</td>
+                                <td>{{ $order->user->email }}</td>
+                                <td>{{ $order->user->address }}</td>
                                 <td>
-                                    <img height="100" width="180" src="/product/{{ $order->image }}">
+                                  <img height="100" width="180" src="/product/{{ $order->image }}">
                                 </td>
-
                                 <td>{{ $order->product_title }} </td>
                                 <td>{{ $order->quantity }} </td>
                                 <td> Rp.{{ number_format ($order->price) }} </td>
-                                <td>{{ $order->name }}</td>
-                                <td>{{ $order->address }}</td>
-                                <td>{{ $order->email }}</td>
 
 
                             </tr><!-- END TR-->

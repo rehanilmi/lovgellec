@@ -146,6 +146,12 @@ class AdminController extends Controller
             return view('admin.order_adm', compact('pesanan'));
         }
 
+        public function detail_order_adm($id)
+        {
+          $order=Order::where('header_order_id','=',$id)->get();
+          return view('admin.detail_order_adm', compact('order'));
+        }
+
         public function bayar($id)
         {
             $order=HeaderOrder::find($id);

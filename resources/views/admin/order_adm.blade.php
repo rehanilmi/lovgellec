@@ -43,15 +43,11 @@
                                 <th>Phone</th>
                                 <th>Jumlah</th>
                                 <th>Total Belanja</th>
-                                <th>Total Ongkir</th>
-                                <th>Total Semua</th>
-                                <th>Kurir</th>
-                                <th>Layanan</th>
                                 <th> Status Pembayaran</th>
                                 <th> Status Pengiriman</th>
                                 <th> Print PDF</th>
                                 <th> Send Email</th>
-                                <!-- <th> Keterangan</th> -->
+                                <th> Keterangan</th>
 
 
                             </tr>
@@ -68,10 +64,6 @@
                                     <td>{{ $order->user-> phone }}</td>
                                     <td>{{ $order->count }}</td>
                                     <td>{{ number_format($order->total_belanja) }}</td>
-                                    <td>{{ number_format($order->total_ongkir) }}</td>
-                                    <td>{{ number_format($order->total) }}</td>
-                                    <td>{{ $order->kurir }}</td>
-                                    <td>{{ $order->layanan }}</td>
                                     <td>
                                         @if ($order->payment_status == 1)
                                         <a href="{{ url('bayar',$order->id) }}"
@@ -102,6 +94,9 @@
 
                                     <td>
                                         <a href="{{ url('send_email',$order->id) }}" class="btn btn-info">Send Email</a>
+                                    </td>
+                                    <td>
+                                      <a href="{{ url('detail_order_adm',$order->id) }}" class="btn btn-info">Detail</a>
                                     </td>
 
 

@@ -29,6 +29,10 @@ class HomeController extends Controller
         return view('home.userpage', compact('product'));
     }
 
+    public function user()
+    {
+       return $this->belongsTo(User::class);
+    }
 
 
     public function redirect()
@@ -47,9 +51,9 @@ class HomeController extends Controller
                 $total_revenue=$total_revenue + $order->price;
             }
 
-            $total_delivered=order::where('delivery_status','=','delivered')->
+            $total_delivered=HeaderOrder::where('status','=','Sedang Dikirim')->
             get()->count();
-            $total_processing=order::where('delivery_status','=','processing')->
+            $total_processing=HeaderOrder::where('status','=','Sedang Diproses')->
             get()->count();
 
             return view('admin.home', compact('total_product','total_order','total_user',
@@ -78,6 +82,7 @@ class HomeController extends Controller
     {
         if(Auth::id())
         {
+
             $user=Auth::user();
             $userid=$user->id;
             $product=product::find($id);
@@ -99,14 +104,10 @@ class HomeController extends Controller
             else
             {
                 $cart=new cart;
-                $cart->name=$user->name;
-                $cart->email=$user->email;
-                $cart->phone=$user->phone;
-                $cart->address=$user->address;
-                $cart->user_id=$user->id;
-                $cart->product_title=$product->title;
                 $cart->price=$product->price;
+                $cart->product_title=$product->title;
                 $cart->image=$product->image;
+                $cart->user_id=$user->id;
                 $cart->Product_id=$product->id;
                 $cart->quantity=$request->quantity;
 
@@ -130,9 +131,7 @@ class HomeController extends Controller
             {
                 $id=Auth::user()->id;
                 $cart=cart::where('user_id','=',$id)->get();
-                $provinsi = $this->get_province();
-
-                return view('home.showcart', compact('cart','provinsi'));
+                return view('home.showcart', compact('cart'));
             }
             else
             {
@@ -185,161 +184,54 @@ class HomeController extends Controller
 
 
 
-        public function payment($id)
-            {
-                // Set your Merchant Server Key
-                \Midtrans\Config::$serverKey = "SB-Mid-server-WkAHMa1WfB8zECN5nFR3jrOz";
-                // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-                \Midtrans\Config::$isProduction = false;
-                // Set sanitization on (default)
-                \Midtrans\Config::$isSanitized = true;
-                // Set 3DS transaction for credit card to true
-                \Midtrans\Config::$is3ds = true;
+      public function payment($id)
+          {
+              // Set your Merchant Server Key
+              \Midtrans\Config::$serverKey = "SB-Mid-server-WkAHMa1WfB8zECN5nFR3jrOz";
+              // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+              \Midtrans\Config::$isProduction = false;
+              // Set sanitization on (default)
+              \Midtrans\Config::$isSanitized = true;
+              // Set 3DS transaction for credit card to true
+              \Midtrans\Config::$is3ds = true;
 
-                $user=Auth::user();
-                $userid=$user->id;
-                $data=HeaderOrder::where('user_id','=',$userid)->get();
-                // $totalbelanja=0;
+              $user=Auth::user();
+              $userid=$user->id;
+              $data=HeaderOrder::where('user_id','=',$userid)->get();
+              // $totalbelanja=0;
 
 
-                foreach($data as $dt => $val)
-                {
-                    // $dd = ::where('header_order_id','=',$val->id)->get();
+              foreach($data as $dt => $val)
+              {
+                  // $dd = ::where('header_order_id','=',$val->id)->get();
 
-                    $params = array(
-                        'transaction_details' => array(
-                            'order_id' => rand(),
-                            'gross_amount' => $val->total,
-                        ),
-                        'customer_details' => array(
-                            'first_name' => 'sdr',
-                            'last_name' => $user->name,
-                            'email' => $user->email,
-                            'phone' => $user->phone,
-                        ),
-                    );
+                  $params = array(
+                      'transaction_details' => array(
+                          'order_id' => rand(),
+                          'gross_amount' => $val->total_belanja,
+                      ),
+                      'customer_details' => array(
+                          'first_name' => 'sdr',
+                          'last_name' => $user->name,
+                          'email' => $user->email,
+                          'phone' => $user->phone,
+                      ),
+                  );
+              }
+
+              $snapToken = \Midtrans\Snap::getSnapToken($params);
+              return view('home.payment', compact ('snapToken'));
+          }
+
+
+          public function payment_post(Request $request,$id)
+               {
+                   $json = json_decode($request->get('json'));
+                   $order=HeaderOrder::find($id);
+                   $order->snap_token=$request->transaction_status;
+                   $order->save();
+                   return view('home.order', compact('json','order'));
                 }
-
-                $snapToken = \Midtrans\Snap::getSnapToken($params);
-                return view('home.payment', compact ('snapToken'));
-            }
-        // public function payment_post(Request $request)
-        // {
-        //     $json = json_decode($request->get('json'));
-        //     $order = new Order();
-        //     $order->payment_status = $json->transaction_status;
-        //     $order->name = $request->name;
-        //     $order->email = $request->email;
-        //     $order->phone = $request->phone;
-        //     // $order->transaction_id = $json->transaction_id;
-        //     // $order->order_id = $json->order_id;
-        //     // $order->gross_amount = $json->gross_amount;
-        //     // $order->payment_type = $json->payment_type;
-        //     // $order->payment_code = isset($json->payment_code) ? $json->payment_code : null;
-        //     // $order->pdf_url = isset($json->pdf_url) ? $json->pdf_url : null;
-        //     return $order->save() ? redirect(url('/'))->with('alert-success', 'Order berhasil dibuat') : redirect(url('/'))->with('alert-failed', 'Terjadi kesalahan');
-        // }
-
-
-
-        public function get_province(){
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-            "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-        echo "cURL Error #:" . $err;
-        } else {
-        //ini kita decode data nya terlebih dahulu
-        $response=json_decode($response,true);
-        //ini untuk mengambil data provinsi yang ada di dalam rajaongkir resul
-        $data_pengirim = $response['rajaongkir']['results'];
-        return $data_pengirim;
-        }
-
-        }
-
-
-
-        public function get_city($id){
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.rajaongkir.com/starter/city?&province=$id",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-            "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-        echo "cURL Error #:" . $err;
-        } else {
-        $response=json_decode($response,true);
-        $data_kota = $response['rajaongkir']['results'];
-        return json_encode($data_kota);
-        }
-
-        }
-
-
-
-        public function get_ongkir($origin, $destination, $weight, $courier){
-        $curl = curl_init();
-        $origin = 456;
-        $weight = 1000;
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => "origin=$origin&destination=$destination&weight=$weight&courier=$courier",
-        CURLOPT_HTTPHEADER => array(
-        "content-type: application/x-www-form-urlencoded",
-        "key: b7f0f0d4a7e7344f9a861958e4fd4c8b"
-        ),
-        ));
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if ($err) {
-        echo "cURL Error #:" . $err;
-        } else {
-        $response=json_decode($response,true);
-        $data_ongkir = $response['rajaongkir']['results'];
-        return json_encode($data_ongkir);
-        }
-        }
-
 
 
         public function cancel_order($id)
@@ -414,7 +306,6 @@ class HomeController extends Controller
             $userid=$user->id;
             $data=cart::where('user_id','=',$userid)->get();
             $totalbelanja=0;
-            $provinsi = $this->get_province();
             $showcart = $this->show_cart();
             $totalCart =  cart::where('user_id','=',$userid)->count();
             $ldate = date('Y-m-d H:i:s');
@@ -424,10 +315,6 @@ class HomeController extends Controller
                 $totalprice = $val->price * $val->quantity;
                 $totalbelanja+= $totalprice;
 
-                // $cart_id=$val->id;
-                // $cart=cart::find($cart_id);
-                // $cart->delete();
-
             }
 
                 $headerorder=new HeaderOrder;
@@ -435,12 +322,8 @@ class HomeController extends Controller
                 $headerorder->user_id=$userid;
                 $headerorder->count=$totalCart;
                 $headerorder->total_belanja=$request->totalbelanja;
-                $headerorder->total_ongkir=$request->totalongkir;
-                $headerorder->total=$request->totalbelanja + $request->totalongkir;
                 $headerorder->metode_pembayaran =$request->metode_pembayaran;
-                $headerorder->kurir = $request->kurir;
                 $headerorder->status = 'Sedang Diproses';
-                $headerorder->layanan = $request->service;
 
                 if($headerorder->metode_pembayaran == 'Transfer')
                 {
@@ -463,16 +346,11 @@ class HomeController extends Controller
 
                 $order=new order;
                 $order->header_order_id=$headerorder->id;
-                $order->name=$row->name;
-                $order->email=$row->email;
-                $order->phone=$row->phone;
-                $order->address=$request->nama_provinsi;
                 $order->user_id=$row->user_id;
+                $order->product_id=$row->Product_id;
                 $order->product_title=$row->product_title;
                 $order->price=$row->price;
                 $order->quantity=$row->quantity;
-                $order->image=$row->image;
-                $order->product_id=$row->Product_id;
                 $order->image=$row->image;
                 $order->save();
 

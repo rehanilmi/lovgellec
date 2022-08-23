@@ -58,6 +58,8 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/send_email/{id}',[AdminController::class,'send_email']);
 
+    route::get('/detail_order_adm/{id}',[AdminController::class,'detail_order_adm']);
+
     route::post('/send_user_email/{id}',[AdminController::class,'send_user_email']);
 
     route::get('/search',[AdminController::class,'searchdata']);
@@ -96,7 +98,7 @@ Route::middleware(['auth:sanctum','verified'])->get('/dashboard',function(){
 
     route::get('/payment/{id}',[HomeController::class,'payment']);
     //
-    //route::post('/payment',[HomeController::class,'payment_post']);
+    route::get('/payment_post/{id}',[HomeController::class,'payment_post']);
 
     // route::get('/order/create',[HomeController::class,'do_create_order']);
 

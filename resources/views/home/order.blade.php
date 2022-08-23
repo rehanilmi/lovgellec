@@ -15,13 +15,10 @@
                                 <th> Tanggal </th>
                                 <th> Invoice</th>
                                 <th> Total Belanja</th>
-                                <th> Total Ongkir</th>
-                                <th> Total </th>
                                 <th> Jumlah </th>
-                                <th> Kurir </th>
-                                <th> Layanan </th>
                                 <th> Metode Pembayaran </th>
                                 <th> Status Barang </th>
+                                <th></th>
                                 <th> Status Pembayaran </th>
                                 <th> Pembayaran</th>
                                 <th> Aksi </th>
@@ -33,13 +30,17 @@
                                 <td> {{ $headerorder->tanggal_order }} </td>
                                 <td> {{ $headerorder->id}} </td>
                                 <td> {{ number_format($headerorder->total_belanja) }} </td>
-                                <td> {{ number_format($headerorder->total_ongkir) }} </td>
-                                <td> {{ number_format($headerorder->total) }} </td>
                                 <td> {{ $headerorder->count }} </td>
-                                <td> {{ $headerorder->kurir }} </td>
-                                <td> {{ $headerorder->layanan }} </td>
                                 <td> {{ $headerorder->metode_pembayaran }} </td>
-                                <td> {{ $headerorder->status }} </td>
+                                <td>  @if ($headerorder->status == 'Sedang Diproses') {{ $headerorder->status }}
+                                      @elseif ($headerorder->status == 'Sudah Dikirim')
+                                    <a href="{{ url('selesai',$headerorder->id) }}"
+                                    onclick="return confirm('Apakah Produk Sudah Diterima?!')"
+                                    class="btn btn-primary">Sudah Dikirim</a>
+                                    @else
+                                        {{ $headerorder->status }}
+                                    @endif
+                                <td>
                                 <td><b>
                                         @if ($headerorder->payment_status == 1)
                                             Menunggu Pembayaran

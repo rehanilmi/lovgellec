@@ -13,7 +13,7 @@
   <body>
     <button id="pay-button">Pay!</button>
 
-    <form action="" id="submit_form" method="POST">
+    <form action="{{ url('/order') }}" id="submit_form" method="GET">
         @csrf
         <input type="hidden" name="json" id="json_callback">
     </form>
